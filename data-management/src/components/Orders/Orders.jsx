@@ -8,7 +8,7 @@ let Orders = (props) => {
             {props.orders.map(o => {
                 debugger
                 return (
-                    <p className={styles.item} key={o.id}>{o.name}</p>
+                    <p className={styles.item} key={o.id}>{o.name} (Цена: {o.cost} р.)</p>
                 )
             })}
         </div>

@@ -5,6 +5,8 @@ import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
 import TestersContainer from './components/Testers/TestersContainer';
 import OrdersContainer from './components/Orders/OrdersContainer';
+import DevelopersContainer from './components/Developers/DevelopersContainer';
+import CustomersContainer from './components/Customers/CustomersContainer';
 
 function App() {
   return (
@@ -15,12 +17,8 @@ function App() {
         <Route exact path="/load" render={() => <Preloader />} />
         <Route exact path="/testers" render={() => <TestersContainer />} />
         <Route exact path="/orders" render={() => <OrdersContainer />} />
-        {/* <Route exact path="/profile" render={() => <Profile />} />
-        <Route exact path="/dialogs" render={() => <DialogsContainer />} />
-        <Route exact path="/users" render={() => <UsersContainer />} />
-        <Route exact path="/news" render={() => <DialogsContainer />} />
-        <Route exact path="/music" render={() => <DialogsContainer />} />
-        <Route exact path="/settings" render={() => <DialogsContainer />} /> */}
+        <Route exact path="/developers" render={() => <DevelopersContainer />} />
+        <Route exact path="/customers" render={() => <CustomersContainer />} />
       </div>
     </div>
   );

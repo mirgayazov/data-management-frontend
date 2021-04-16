@@ -5,11 +5,11 @@ import Testers from './Testers'
 import axios from 'axios'
 import { Preloader } from "../common/preloader/Preloader";
 
-class StaffContainer extends React.Component {
+class TestersContainer extends React.Component {
     componentDidMount() {
         if (this.props.testers.length === 0) {
             this.props.toggleIsFetching(true);
-            axios.get('http://localhost:3003/testers')
+            axios.get('http://localhost:3001/testers')
                 .then(response => {
                     this.props.toggleIsFetching(false);
                     this.props.setTesters(response.data.testers);
@@ -36,4 +36,4 @@ const mapStateToProps = (state) => {
 
 
 
-export default connect(mapStateToProps, { addTester, setTesters, toggleIsFetching })(StaffContainer)
+export default connect(mapStateToProps, { addTester, setTesters, toggleIsFetching })(TestersContainer)

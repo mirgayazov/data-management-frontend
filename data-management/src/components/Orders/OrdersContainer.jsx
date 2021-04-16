@@ -9,7 +9,7 @@ class OrderContainer extends React.Component {
     componentDidMount() {
         if (this.props.orders.length === 0) {
             this.props.toggleIsFetching(true);
-            axios.get('http://localhost:3003/orders')
+            axios.get('http://localhost:3001/orders')
                 .then(response => {
                     debugger
                     this.props.toggleIsFetching(false);

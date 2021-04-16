@@ -8,7 +8,7 @@ let Testers = (props) => {
             {props.testers.map(t => {
                 debugger
                 return (
-                    <p className={styles.item} key={t.personnel_number}>{t.full_name}</p>
+                    <p className={styles.item} key={t.personnel_number}>{t.full_name} (Метод: {t.test_method}) </p>
                 )
             })}
         </div>
