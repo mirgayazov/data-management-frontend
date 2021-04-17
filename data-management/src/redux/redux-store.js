@@ -4,6 +4,7 @@ import ordersReducer from './orders-reducer'
 import developersReducer from './developers-reducer'
 import customersReducer from './customers-reducer'
 import thunkMiddleware from 'redux-thunk'
+import { reducer as formReducer } from 'redux-form'
 
 
 let reducers = combineReducers({
@@ -11,6 +12,7 @@ let reducers = combineReducers({
     ordersPage: ordersReducer,
     developersPage: developersReducer,
     customersPage: customersReducer,
+    form: formReducer,
 });
 
 export let store = createStore(reducers, applyMiddleware(thunkMiddleware));
