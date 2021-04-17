@@ -1,3 +1,5 @@
+import { testersAPI } from "../API/API"
+
 const ADD_TESTER = "ADD_TESTER"
 const SET_TESTERS = "SET_TESTERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
@@ -47,6 +49,15 @@ export const toggleIsFetching = (isFetching) => {
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching,
     }
+}
+
+export const getTesters = () => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    testersAPI.getUsers()
+        .then(testers => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setTesters(testers));
+        })
 }
 
 export default testersReducer

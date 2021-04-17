@@ -1,3 +1,5 @@
+import { developersAPI } from "../API/API"
+
 const SET_DEVELOPERS = "SET_DEVELOPERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
 
@@ -36,6 +38,15 @@ export const toggleIsFetching = (isFetching) => {
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching,
     }
+}
+
+export const getDevelopers = () => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    developersAPI.getDevelopers()
+        .then(developers => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setDevelopers(developers));
+        })
 }
 
 export default developersReducer

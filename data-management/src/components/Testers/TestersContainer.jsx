@@ -1,28 +1,23 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addTester, setTesters, toggleIsFetching } from '../../redux/testers-reducer'
+import { getTesters } from '../../redux/testers-reducer'
 import Testers from './Testers'
-import axios from 'axios'
-import { Preloader } from "../common/preloader/Preloader";
+import { Preloader } from "../Common/preloader/Preloader";
+import Panel from "../Panel/Panel";
+import { compose } from "redux";
 
 class TestersContainer extends React.Component {
     componentDidMount() {
-        if (this.props.testers.length === 0) {
-            this.props.toggleIsFetching(true);
-            axios.get('http://localhost:3001/testers')
-                .then(response => {
-                    this.props.toggleIsFetching(false);
-                    this.props.setTesters(response.data.testers);
-                })
-        }
+        this.props.getTesters();
     }
 
     render() {
-        debugger
         return (
-            <>
-                {this.props.isFetching ? <Preloader /> : <Testers testers={this.props.testers} />}
-            </>
+            <div>
+                {this.props.isFetching
+                    ? <Preloader />
+                    : <div><Panel /><Testers testers={this.props.testers} /></div>}
+            </div>
         )
     }
 }
@@ -34,6 +29,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-
-
-export default connect(mapStateToProps, { addTester, setTesters, toggleIsFetching })(TestersContainer)
+export default compose(connect(mapStateToProps, { getTesters }))(TestersContainer);

@@ -4,7 +4,9 @@
   display: grid;
   grid-template-areas:
     "h h"
-    "n c";
+    "n p"
+    "n c"
+    "f f";
   grid-template-rows: 125px 1fr;
   grid-template-columns: 200px 8fr;
 }
@@ -14,8 +16,10 @@
   margin: 15px;
   border-radius: 20px;
   padding: 30px 15px 15px 15px;
-  border-radius: 20px;
   background: #ecf0f3; 
-  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #ffffff;
 }
 
+.body {
+  background-color: black;
+}

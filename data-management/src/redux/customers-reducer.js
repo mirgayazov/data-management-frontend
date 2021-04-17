@@ -1,3 +1,5 @@
+import { customersAPI } from "../API/API"
+
 const SET_CUSTOMERS = "SET_CUSTOMERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
 
@@ -36,6 +38,15 @@ export const toggleIsFetching = (isFetching) => {
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching,
     }
+}
+
+export const getCustomers = () => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    customersAPI.getCustomers()
+        .then(customers => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setCustomers(customers));
+        })
 }
 
 export default customersReducer

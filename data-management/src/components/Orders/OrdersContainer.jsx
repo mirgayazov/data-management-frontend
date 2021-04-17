@@ -1,29 +1,20 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setOrders, toggleIsFetching } from '../../redux/orders-reducer'
-import axios from 'axios'
-import { Preloader } from "../common/preloader/Preloader";
+import { compose } from "redux";
+import { getOrders } from '../../redux/orders-reducer'
+import { Preloader } from "../Common/preloader/Preloader";
 import Orders from "./Orders";
 
 class OrderContainer extends React.Component {
     componentDidMount() {
-        if (this.props.orders.length === 0) {
-            this.props.toggleIsFetching(true);
-            axios.get('http://localhost:3001/orders')
-                .then(response => {
-                    debugger
-                    this.props.toggleIsFetching(false);
-                    this.props.setOrders(response.data.orders);
-                })
-        }
+        this.props.getOrders();
     }
 
     render() {
-        debugger
         return (
-            <>
+            <div>
                 {this.props.isFetching ? <Preloader /> : <Orders orders={this.props.orders} />}
-            </>
+            </div>
         )
     }
 }
@@ -35,6 +26,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-
-
-export default connect(mapStateToProps, { setOrders, toggleIsFetching })(OrderContainer)
+export default compose(connect(mapStateToProps, { getOrders }))(OrderContainer);

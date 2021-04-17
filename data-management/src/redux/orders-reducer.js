@@ -1,4 +1,5 @@
-// const ADD_TESTER = "ADD_TESTER"
+import { ordersAPI } from "../API/API"
+
 const SET_ORDERS = "SET_ORDERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
 
@@ -36,6 +37,15 @@ export const toggleIsFetching = (isFetching) => {
         type: TOGGLE_IS_FETCHING,
         isFetching: isFetching,
     }
+}
+
+export const getOrders = () => (dispatch) => {
+    dispatch(toggleIsFetching(true));
+    ordersAPI.getOrders()
+        .then(orders => {
+            dispatch(toggleIsFetching(false));
+            dispatch(setOrders(orders));
+        })
 }
 
 export default ordersReducer

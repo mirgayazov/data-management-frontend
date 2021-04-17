@@ -1,12 +1,14 @@
 import './App.css';
 import { Route } from "react-router-dom"
-import { Preloader } from './components/common/preloader/Preloader';
+import { Preloader } from './components/Common/preloader/Preloader';
 import Navbar from './components/Navbar/Navbar';
 import Header from './components/Header/Header';
+// import Footer from './components/Footer/Footer';
 import TestersContainer from './components/Testers/TestersContainer';
 import OrdersContainer from './components/Orders/OrdersContainer';
 import DevelopersContainer from './components/Developers/DevelopersContainer';
 import CustomersContainer from './components/Customers/CustomersContainer';
+// import Panel from './components/Panel/Panel';
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
         <Route exact path="/developers" render={() => <DevelopersContainer />} />
         <Route exact path="/customers" render={() => <CustomersContainer />} />
       </div>
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -1,22 +1,13 @@
 import React from "react";
 import { connect } from "react-redux";
-import { setCustomers, toggleIsFetching } from '../../redux/customers-reducer'
-import axios from 'axios'
-import { Preloader } from "../common/preloader/Preloader";
+import { compose } from "redux";
+import { getCustomers } from '../../redux/customers-reducer'
+import { Preloader } from "../Common/preloader/Preloader";
 import Customers from "./Customers";
 
 class CustomersContainer extends React.Component {
     componentDidMount() {
-        debugger
-        if (this.props.customers.length === 0) {
-            this.props.toggleIsFetching(true);
-            axios.get('http://localhost:3001/customers')
-                .then(response => {
-                    debugger
-                    this.props.toggleIsFetching(false);
-                    this.props.setCustomers(response.data.customers);
-                })
-        }
+        this.props.getCustomers();
     }
 
     render() {
@@ -36,6 +27,4 @@ const mapStateToProps = (state) => {
     }
 }
 
-
-
-export default connect(mapStateToProps, { setCustomers, toggleIsFetching })(CustomersContainer)
+export default compose(connect(mapStateToProps, { getCustomers }))(CustomersContainer);
