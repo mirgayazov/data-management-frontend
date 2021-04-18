@@ -48,7 +48,7 @@ let TesterInfo = (props) => {
                         <tr>
                             <td>Контакты</td><td>{props.tester.telephone_number}</td>
                         </tr>
-                    </table><table className={styles.testerInfo}>
+                    </table><table className={styles.testerInfo2}>
                         <tr>
                             <td><DeleteTesterFormRedux onSubmit={onSubmit} /></td>
                         </tr>
