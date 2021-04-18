@@ -1,4 +1,4 @@
-import { customersAPI } from "../API/API"
+import { customersAPI } from "../api/api"
 
 const SET_CUSTOMERS = "SET_CUSTOMERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"

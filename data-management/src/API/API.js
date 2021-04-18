@@ -5,7 +5,17 @@ const server = axios.create({
 })
 
 export const testersAPI = {
-    getUsers: () => server.get('testers').then(response => response.data.testers),
+    getTesters: () => server.get('testers').then(response => response.data.testers),
+    getTester(pn) {
+        return server.get(`testers/${pn}`).then(response => response.data.testers)
+    },
+    createNewTester(tester) {
+        return server.post('testers', { tester })
+    },
+    deleteTester(pn) {
+        debugger
+        return server.delete('testers', { data: { pn } })
+    },
 }
 
 export const ordersAPI = {

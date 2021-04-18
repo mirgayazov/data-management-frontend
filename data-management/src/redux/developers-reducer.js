@@ -1,4 +1,4 @@
-import { developersAPI } from "../API/API"
+import { developersAPI } from "../api/api"
 
 const SET_DEVELOPERS = "SET_DEVELOPERS"
 const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"

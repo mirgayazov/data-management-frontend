@@ -1,0 +1,54 @@
+.formControl {
+  display: inline-block;
+}
+
+.formControl.error textarea,
+.formControl.error input {
+  border: 3px red solid;
+}
+
+.formControl.error span {
+  color: red;
+}
+
+.tooltip input{
+  width: 300px;
+}
+
+.tooltip form button{
+  outline: none;
+  border: 0;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  width: 120px;
+  background-color: rgb(255, 255, 255);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+}
+
+.blink {
+  display: inline-block;
+  animation-name: blinker;
+  animation-iteration-count: infinite;
+  animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+  animation-duration: 1s;
+  -webkit-animation-name: blinker;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: cubic-bezier(1.0,2.0,0,1.0);
+  -webkit-animation-duration: 1s;
+}
+ 
+@keyframes blinker {
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}

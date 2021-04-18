@@ -1,4 +1,4 @@
-import { testersAPI } from "../API/API"
+import { testersAPI } from "../api/api"
 
 const ADD_TESTER = "ADD_TESTER"
 const SET_TESTERS = "SET_TESTERS"
@@ -24,7 +24,7 @@ const testersReducer = (state = initialState, action) => {
         case SET_TESTERS:
             return {
                 ...state,
-                testers: action.testers
+                testers: action.testers.reverse()
             }
         default:
             return state;
@@ -53,10 +53,25 @@ export const toggleIsFetching = (isFetching) => {
 
 export const getTesters = () => (dispatch) => {
     dispatch(toggleIsFetching(true));
-    testersAPI.getUsers()
+    testersAPI.getTesters()
         .then(testers => {
             dispatch(toggleIsFetching(false));
             dispatch(setTesters(testers));
+        })
+}
+
+export const createNewTester = (tester) => (dispatch) => {
+    debugger
+    testersAPI.createNewTester(tester)
+        .then(response => {
+            dispatch(getTesters())
+        })
+}
+
+export const deleteTester = (pn) => (dispatch) => {
+    testersAPI.deleteTester(pn)
+        .then(response => {
+            dispatch(getTesters())
         })
 }
 

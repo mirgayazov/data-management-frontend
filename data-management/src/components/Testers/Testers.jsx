@@ -1,14 +1,17 @@
 import styles from "./Testers.module.css";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 let Testers = (props) => {
-    debugger
     return (
         <div className={styles.tester}>
             {props.testers.map(t => {
-                debugger
                 return (
-                    <p className={styles.item} key={t.personnel_number}>{t.full_name} (Метод: {t.test_method}) </p>
+                    <NavLink className={styles.link} to={`/testers/${t.personnel_number}`}>
+                        <div className={styles.item} key={t.personnel_number}>
+                            {t.full_name}
+                        </div>
+                    </NavLink>
                 )
             })}
         </div>
