@@ -4,6 +4,7 @@ import { reduxForm } from "redux-form";
 import { connect } from "react-redux";
 import { deleteTester } from '../../../redux/testers-reducer'
 import { Redirect } from "react-router";
+import { NavLink } from "react-router-dom";
 
 const deleteTesterForm = (props) => {
     return (
@@ -25,7 +26,7 @@ let TesterInfo = (props) => {
     return (
         <div className={styles.tester}>
             {props.tester ?
-                <>
+                <> <NavLink key={'back'} className={styles.link} to={`/testers`} title="назад">⇦</NavLink>
                     <h1>{props.tester.full_name}</h1>
                     <table className={styles.testerInfo}>
                         <tr>
@@ -41,7 +42,7 @@ let TesterInfo = (props) => {
                             <td>Номер паспорта</td><td>{props.tester.passport_details.number}</td>
                         </tr>
                         <tr>
-                            <td>Зарплата</td><td>{props.tester.salary}</td>
+                            <td>Зарплата</td><td>{props.tester.salary}₽</td>
                         </tr>
                         <tr>
                             <td>Контакты</td><td>{props.tester.telephone_number}</td>
