@@ -26,7 +26,6 @@ const customersReducer = (state = initialState, action) => {
 }
 
 export const setCustomers = (customers) => {
-    debugger
     return {
         type: SET_CUSTOMERS,
         customers: customers,

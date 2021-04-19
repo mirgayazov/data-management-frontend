@@ -6,16 +6,8 @@ const server = axios.create({
 
 export const testersAPI = {
     getTesters: () => server.get('testers').then(response => response.data.testers),
-    getTester(pn) {
-        return server.get(`testers/${pn}`).then(response => response.data.testers)
-    },
-    createNewTester(tester) {
-        return server.post('testers', { tester })
-    },
-    deleteTester(pn) {
-        debugger
-        return server.delete('testers', { data: { pn } })
-    },
+    createNewTester(tester) { return server.post('testers', { tester }) },
+    deleteTester(pn) { return server.delete('testers', { data: { pn } }) },
 }
 
 export const ordersAPI = {
@@ -24,6 +16,8 @@ export const ordersAPI = {
 
 export const developersAPI = {
     getDevelopers: () => server.get('developers').then(response => response.data.developers),
+    createNewDeveloper(developer) { return server.post('developers', { developer }) },
+    deleteDeveloper(pn) { return server.delete('developers', { data: { pn } }) },
 }
 
 export const customersAPI = {

@@ -61,7 +61,6 @@ export const getTesters = () => (dispatch) => {
 }
 
 export const createNewTester = (tester) => (dispatch) => {
-    debugger
     testersAPI.createNewTester(tester)
         .then(response => {
             dispatch(getTesters())

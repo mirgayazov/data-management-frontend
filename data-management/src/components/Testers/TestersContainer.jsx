@@ -4,6 +4,7 @@ import { getTesters } from '../../redux/testers-reducer'
 import Testers from './Testers'
 import Panel from "../Panel/Panel";
 import { compose } from "redux";
+const TESTERS = 'TESTERS'
 
 class TestersContainer extends React.Component {
     componentDidMount() {
@@ -13,7 +14,7 @@ class TestersContainer extends React.Component {
     render() {
         return (
             <div>
-                <Panel />
+                <Panel target={TESTERS} />
                 <Testers testers={this.props.testers} />
             </div>
         )

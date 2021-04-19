@@ -11,7 +11,6 @@ class CustomersContainer extends React.Component {
     }
 
     render() {
-        debugger
         return (
             <>
                 { this.props.isFetching ? <Preloader /> : <Customers customers={this.props.customers} />}

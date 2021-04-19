@@ -18,7 +18,7 @@ const developersReducer = (state = initialState, action) => {
         case SET_DEVELOPERS:
             return {
                 ...state,
-                developers: action.developers
+                developers: action.developers.reverse()
             }
         default:
             return state;
@@ -26,7 +26,6 @@ const developersReducer = (state = initialState, action) => {
 }
 
 export const setDevelopers = (developers) => {
-    debugger
     return {
         type: SET_DEVELOPERS,
         developers: developers,
@@ -48,5 +47,20 @@ export const getDevelopers = () => (dispatch) => {
             dispatch(setDevelopers(developers));
         })
 }
+
+export const createNewDeveloper = (developer) => (dispatch) => {
+    developersAPI.createNewDeveloper(developer)
+        .then(response => {
+            dispatch(getDevelopers())
+        })
+}
+
+export const deleteDeveloper = (pn) => (dispatch) => {
+    developersAPI.deleteDeveloper(pn)
+        .then(response => {
+            dispatch(getDevelopers())
+        })
+}
+
 
 export default developersReducer

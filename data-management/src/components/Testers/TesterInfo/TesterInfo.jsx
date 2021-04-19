@@ -18,8 +18,6 @@ const DeleteTesterFormRedux = reduxForm({
 })(deleteTesterForm)
 
 let TesterInfo = (props) => {
-    debugger
-
     const onSubmit = (formData) => {
         props.deleteTester(props.tester.personnel_number)
     }

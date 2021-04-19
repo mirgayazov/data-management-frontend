@@ -1,14 +1,17 @@
 import styles from "./Developers.module.css";
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 let Developers = (props) => {
-    debugger
     return (
         <div className={styles.developer}>
             {props.developers.map(d => {
-                debugger
                 return (
-                    <p className={styles.item} key={d.personnel_number}>{d.full_name} (Позиция: {d.position})</p>
+                    <NavLink key={d.personnel_number} className={styles.link} to={`/developers/${d.personnel_number}`}>
+                        <div className={styles.item} >
+                            {d.full_name}
+                        </div>
+                    </NavLink>
                 )
             })}
         </div>

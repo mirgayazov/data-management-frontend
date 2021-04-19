@@ -1,8 +1,10 @@
 import { AddNewTesterFormRedux } from '../Forms/Testers/Testers'
 import { createNewTester } from '../../redux/testers-reducer'
+import { createNewDeveloper } from '../../redux/developers-reducer'
 import { connect } from 'react-redux';
 import styles from './Panel.module.css'
 import React from 'react';
+import { AddNewDeveloperFormRedux } from '../Forms/Developers/Developers';
 
 class Panel extends React.Component {
   state = {
@@ -28,6 +30,9 @@ class Panel extends React.Component {
     this.props.createNewTester(tester)
   }
 
+  addNewDeveloper = (developer) => {
+    this.props.createNewDeveloper(developer)
+  }
   render() {
     return (
       <div>
@@ -37,7 +42,8 @@ class Panel extends React.Component {
           <div style={{ display: this.state.closeBtndisplay }}>
             <hr />
             <p></p>
-            <AddNewTesterFormRedux onSubmit={this.addNewTester} />
+            {this.props.target === 'TESTERS' ? <AddNewTesterFormRedux onSubmit={this.addNewTester} /> : <></>}
+            {this.props.target === 'DEVELOPERS' ? <AddNewDeveloperFormRedux onSubmit={this.addNewDeveloper} /> : <></>}
           </div>
         </div>
       </div>
@@ -45,4 +51,4 @@ class Panel extends React.Component {
   }
 };
 
-export default connect(null, { createNewTester })(Panel);
+export default connect(null, { createNewTester, createNewDeveloper })(Panel);

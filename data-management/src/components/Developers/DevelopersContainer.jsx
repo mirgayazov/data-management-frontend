@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { getDevelopers } from '../../redux/developers-reducer'
-import { Preloader } from "../Common/preloader/Preloader";
+import Panel from "../Panel/Panel";
 import Developers from "./Developers";
+const DEVELOPERS = 'DEVELOPERS'
 
 class DevelopersContainer extends React.Component {
     componentDidMount() {
@@ -12,9 +13,10 @@ class DevelopersContainer extends React.Component {
 
     render() {
         return (
-            <>
-                { this.props.isFetching ? <Preloader /> : <Developers developers={this.props.developers} />}
-            </>
+            <div>
+                <Panel target={DEVELOPERS} />
+                <Developers developers={this.props.developers} />
+            </div>
         )
     }
 }
