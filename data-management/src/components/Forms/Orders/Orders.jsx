@@ -1,10 +1,9 @@
 import styles from './Orders.module.css'
 import { Field, reduxForm } from 'redux-form'
-import { required, maxLength, minValue } from '../../../utils/validators/validators';
+import { required, minValue } from '../../../utils/validators/validators';
 import { Input, Textarea } from '../../Common/FormControls/FormControls';
 
 const minValue4 = minValue(4);
-const minValue15000 = minValue(15000);
 
 const AddNewOrderForm = (props) => {
   return (

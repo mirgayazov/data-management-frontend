@@ -14,10 +14,16 @@ const FormControl = ({ input, meta, child, ...props }) => {
 
 export const Textarea = (props) => {
     const { input, meta, child, ...restProps } = props
+    if (props.myValue) {
+        return <FormControl {...props}><textarea {...input} {...restProps} value={props.myValue} /></FormControl>
+    }
     return <FormControl {...props}><textarea {...input} {...restProps} /></FormControl>
 }
 
 export const Input = (props) => {
     const { input, meta, child, ...restProps } = props
+    if (props.myValue) {
+        return <FormControl {...props}><input {...input} {...restProps} value={props.myValue} /></FormControl>
+    }
     return <FormControl {...props}><input {...input} {...restProps} /></FormControl>
 }
