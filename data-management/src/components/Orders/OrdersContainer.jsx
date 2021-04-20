@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { getOrders } from '../../redux/orders-reducer'
-import { Preloader } from "../Common/preloader/Preloader";
+import Panel from "../Panel/Panel";
 import Orders from "./Orders";
+const ORDERS = 'ORDERS'
 
 class OrderContainer extends React.Component {
     componentDidMount() {
@@ -13,7 +14,8 @@ class OrderContainer extends React.Component {
     render() {
         return (
             <div>
-                {this.props.isFetching ? <Preloader /> : <Orders orders={this.props.orders} />}
+                <Panel target={ORDERS} />
+                <Orders orders={this.props.orders} />
             </div>
         )
     }

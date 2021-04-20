@@ -12,6 +12,8 @@ export const testersAPI = {
 
 export const ordersAPI = {
     getOrders: () => server.get('orders').then(response => response.data.orders),
+    createNewOrder(order) { return server.post('orders', { order }) },
+    deleteOrder(id) { return server.delete('orders', { data: { id } }) },
 }
 
 export const developersAPI = {

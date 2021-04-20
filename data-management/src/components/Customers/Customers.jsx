@@ -69,6 +69,13 @@ class Customers extends React.Component {
         this.myRef.current.value = '';
         this.setState({ customers: rollbackcustomers });
     }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.customers !== this.props.customers) {
+            this.setState({ customers: this.props.customers })
+        }
+    }
+
     render() {
         return (
             <div className={styles.customer}>

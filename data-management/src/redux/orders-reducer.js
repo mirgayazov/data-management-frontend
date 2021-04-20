@@ -18,7 +18,7 @@ const ordersReducer = (state = initialState, action) => {
         case SET_ORDERS:
             return {
                 ...state,
-                orders: action.orders
+                orders: action.orders.reverse()
             }
         default:
             return state;
@@ -45,6 +45,20 @@ export const getOrders = () => (dispatch) => {
         .then(orders => {
             dispatch(toggleIsFetching(false));
             dispatch(setOrders(orders));
+        })
+}
+
+export const createNewOrder = (order) => (dispatch) => {
+    ordersAPI.createNewOrder(order)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
+export const deleteOrder = (pn) => (dispatch) => {
+    ordersAPI.deleteOrder(pn)
+        .then(response => {
+            dispatch(getOrders())
         })
 }
 

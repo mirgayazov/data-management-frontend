@@ -2,11 +2,13 @@ import { AddNewTesterFormRedux } from '../Forms/Testers/Testers'
 import { createNewTester } from '../../redux/testers-reducer'
 import { createNewDeveloper } from '../../redux/developers-reducer'
 import { createNewCustomer } from '../../redux/customers-reducer'
+import { createNewOrder } from '../../redux/orders-reducer'
 import { connect } from 'react-redux';
 import styles from './Panel.module.css'
 import React from 'react';
 import { AddNewDeveloperFormRedux } from '../Forms/Developers/Developers';
 import { AddNewCustomerFormRedux } from '../Forms/Customers/Customers';
+import { AddNewOrderFormRedux } from '../Forms/Orders/Orders';
 
 class Panel extends React.Component {
   state = {
@@ -40,12 +42,18 @@ class Panel extends React.Component {
     this.props.createNewCustomer(customer)
   }
 
+  addNewOrder = (order) => {
+    this.props.createNewOrder(order)
+  }
+
   render() {
     let name = '';
     if ((this.props.target === 'TESTERS') || (this.props.target === 'DEVELOPERS')) {
       name = 'сотрудника';
-    } else {
+    } else if (this.props.target === 'CUSTOMERS') {
       name = 'клиента';
+    } else {
+      name = 'заказ';
     }
     return (
       <div>
@@ -58,6 +66,7 @@ class Panel extends React.Component {
             {this.props.target === 'TESTERS' ? <AddNewTesterFormRedux onSubmit={this.addNewTester} /> : <></>}
             {this.props.target === 'DEVELOPERS' ? <AddNewDeveloperFormRedux onSubmit={this.addNewDeveloper} /> : <></>}
             {this.props.target === 'CUSTOMERS' ? <AddNewCustomerFormRedux onSubmit={this.addNewCustomer} /> : <></>}
+            {this.props.target === 'ORDERS' ? <AddNewOrderFormRedux onSubmit={this.addNewOrder} /> : <></>}
           </div>
         </div>
       </div>
@@ -65,4 +74,4 @@ class Panel extends React.Component {
   }
 };
 
-export default connect(null, { createNewTester, createNewDeveloper, createNewCustomer })(Panel);
+export default connect(null, { createNewTester, createNewDeveloper, createNewCustomer, createNewOrder })(Panel);
