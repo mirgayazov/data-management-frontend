@@ -2,8 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { compose } from "redux";
 import { getCustomers } from '../../redux/customers-reducer'
-import { Preloader } from "../Common/preloader/Preloader";
+import Panel from "../Panel/Panel";
 import Customers from "./Customers";
+const CUSTOMERS = 'CUSTOMERS'
 
 class CustomersContainer extends React.Component {
     componentDidMount() {
@@ -12,9 +13,11 @@ class CustomersContainer extends React.Component {
 
     render() {
         return (
-            <>
-                { this.props.isFetching ? <Preloader /> : <Customers customers={this.props.customers} />}
-            </>
+            <div>
+                <Panel target={CUSTOMERS} />
+                {this.props.customers.length === 0 ? <>null</> : <Customers customers={this.props.customers} />}
+
+            </div>
         )
     }
 }
@@ -22,7 +25,6 @@ class CustomersContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         customers: state.customersPage.customers,
-        isFetching: state.customersPage.isFetching,
     }
 }
 

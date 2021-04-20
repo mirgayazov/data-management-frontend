@@ -70,6 +70,12 @@ class Testers extends React.Component {
         this.setState({ testers: rollbackTesters });
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevProps.testers !== this.props.testers) {
+            this.setState({ testers: this.props.testers })
+        }
+    }
+
     render() {
         return (
             <div className={styles.tester} >

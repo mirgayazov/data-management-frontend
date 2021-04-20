@@ -52,10 +52,8 @@ export const toggleIsFetching = (isFetching) => {
 }
 
 export const getTesters = () => (dispatch) => {
-    dispatch(toggleIsFetching(true));
     testersAPI.getTesters()
         .then(testers => {
-            dispatch(toggleIsFetching(false));
             dispatch(setTesters(testers));
         })
 }

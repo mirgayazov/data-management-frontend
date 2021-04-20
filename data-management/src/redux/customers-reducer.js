@@ -18,7 +18,7 @@ const customersReducer = (state = initialState, action) => {
         case SET_CUSTOMERS:
             return {
                 ...state,
-                customers: action.customers
+                customers: action.customers.reverse()
             }
         default:
             return state;
@@ -40,11 +40,23 @@ export const toggleIsFetching = (isFetching) => {
 }
 
 export const getCustomers = () => (dispatch) => {
-    dispatch(toggleIsFetching(true));
     customersAPI.getCustomers()
         .then(customers => {
-            dispatch(toggleIsFetching(false));
             dispatch(setCustomers(customers));
+        })
+}
+
+export const createNewCustomer = (customer) => (dispatch) => {
+    customersAPI.createNewСustomer(customer)
+        .then(response => {
+            dispatch(getCustomers())
+        })
+}
+
+export const deleteCustomer = (id) => (dispatch) => {
+    customersAPI.deleteСustomer(id)
+        .then(response => {
+            dispatch(getCustomers())
         })
 }
 

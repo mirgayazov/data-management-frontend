@@ -10,6 +10,7 @@ import DevelopersContainer from './components/Developers/DevelopersContainer';
 import CustomersContainer from './components/Customers/CustomersContainer';
 import TesterInfoContainer from './components/Testers/TesterInfo/TesterInfoContainer';
 import DeveloperInfoContainer from './components/Developers/DeveloperInfo/DeveloperInfoContainer';
+import CustomersInfoContainer from './components/Customers/CustomersInfo/CustomerInfoContainer';
 // import Panel from './components/Panel/Panel';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/orders" render={() => <OrdersContainer />} />
 
         <Route exact path="/customers" render={() => <CustomersContainer />} />
+        <Route exact path="/customers/:id" render={() => <CustomersInfoContainer />} />
       </div>
       {/* <Footer /> */}
     </div>
