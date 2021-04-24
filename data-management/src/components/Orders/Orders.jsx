@@ -1,6 +1,6 @@
-import styles from "./Orders.module.css";
-import React from "react";
-import { NavLink } from "react-router-dom";
+import styles from './Orders.module.css';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function levenshtein(s1, s2, costs) {
     var i, j, l1, l2, flip, ch, chl, ii, ii2, cost, cutHalf;

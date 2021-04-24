@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 import { getOrders } from '../../redux/orders-reducer'
-import Panel from "../Panel/Panel";
-import Orders from "./Orders";
+import Panel from '../Panel/Panel';
+import Orders from './Orders';
 const ORDERS = 'ORDERS'
 
 class OrderContainer extends React.Component {

@@ -10,12 +10,12 @@ const maxLength11 = maxLength(11);
 const AddNewCustomerForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit}>
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="ФИО клиента" name={'fullName'} />
-      <Field className={styles.item} component={Input} validate={[required, telephoneNumber]} placeholder="Номер телефона" name={'telephoneNumber'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="Адрес" name={'address'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="Email" name={'email'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="Отзыв" name={'remarks'} />
-      <Field className={styles.item} component={Input} validate={[required, passport, maxLength11]} placeholder="Паспортные данные через пробел" name={'passportDetails'} />
+      <Field className={styles.item} component={Input} validate={[required]} placeholder='ФИО клиента' name={'fullName'} />
+      <Field className={styles.item} component={Input} validate={[required, telephoneNumber]} placeholder='Номер телефона' name={'telephoneNumber'} />
+      <Field className={styles.item} component={Input} validate={[required]} placeholder='Адрес' name={'address'} />
+      <Field className={styles.item} component={Input} validate={[required]} placeholder='Email' name={'email'} />
+      <Field className={styles.item} component={Input} validate={[required]} placeholder='Отзыв' name={'remarks'} />
+      <Field className={styles.item} component={Input} validate={[required, passport, maxLength11]} placeholder='Паспортные данные через пробел' name={'passportDetails'} />
       <button>Добавить</button>
     </form>
   );

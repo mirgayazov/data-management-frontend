@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { withRouter } from "react-router";
-import DeveloperInfo from "./DeveloperInfo";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
+import DeveloperInfo from './DeveloperInfo';
 
 
 class DeveloperInfoContainer extends React.Component {

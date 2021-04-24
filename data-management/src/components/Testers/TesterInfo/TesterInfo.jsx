@@ -1,11 +1,11 @@
-import styles from "./TesterInfo.module.css";
-import React, { useState } from "react";
-import { reduxForm } from "redux-form";
-import { connect } from "react-redux";
+import styles from './TesterInfo.module.css';
+import React, { useState } from 'react';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { deleteTester, updateTester } from '../../../redux/testers-reducer'
-import { Redirect } from "react-router";
-import { NavLink } from "react-router-dom";
-import { FormikUpdateTester } from "../../Forms/Testers/Testers";
+import { Redirect } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import { UpdateTesterForm } from '../../Forms/Testers/Testers';
 
 const deleteTesterForm = (props) => {
     return (
@@ -16,7 +16,7 @@ const deleteTesterForm = (props) => {
 }
 
 const DeleteTesterFormRedux = reduxForm({
-    form: "deleteTesterForm"
+    form: 'deleteTesterForm'
 })(deleteTesterForm)
 
 let TesterInfo = (props) => {
@@ -32,8 +32,8 @@ let TesterInfo = (props) => {
 
     return (
         <div className={styles.tester}>
-            <NavLink key={'back'} className={styles.link} to={`/testers`} title="назад">⇦</NavLink>
-            {editMode ? <FormikUpdateTester tester={props.tester} onSubmit={updateTester} setEditMode={setEditMode}/> :
+            <NavLink key={'back'} className={styles.link} to={`/testers`} title='назад'>⇦</NavLink>
+            {editMode ? <UpdateTesterForm tester={props.tester} onSubmit={updateTester} setEditMode={setEditMode}/> :
                 props.tester ?
                     <div>
 
@@ -66,7 +66,7 @@ let TesterInfo = (props) => {
                             </tbody>
                         </table>
 
-                    </div> : <Redirect to="/testers" />
+                    </div> : <Redirect to='/testers' />
             }
             <table className={styles.testerInfo2}>
                 <tbody>

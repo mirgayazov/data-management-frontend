@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import { withRouter } from "react-router";
-import CustomerInfo from "./CustomerInfo";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { withRouter } from 'react-router';
+import CustomerInfo from './CustomerInfo';
 
 
 class CustomerInfoContainer extends React.Component {

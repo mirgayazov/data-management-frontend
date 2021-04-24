@@ -1,10 +1,10 @@
-import styles from "./DeveloperInfo.module.css";
-import React from "react";
-import { reduxForm } from "redux-form";
-import { connect } from "react-redux";
+import styles from './DeveloperInfo.module.css';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { deleteDeveloper } from '../../../redux/developers-reducer'
-import { Redirect } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Redirect } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 const deleteDeveloperForm = (props) => {
     return (
@@ -15,7 +15,7 @@ const deleteDeveloperForm = (props) => {
 }
 
 const DeleteDeveloperFormRedux = reduxForm({
-    form: "deleteDeveloperForm"
+    form: 'deleteDeveloperForm'
 })(deleteDeveloperForm)
 
 let DeveloperInfo = (props) => {
@@ -26,7 +26,7 @@ let DeveloperInfo = (props) => {
     return (
         <div className={styles.developer}>
             {props.developer ?
-                <><NavLink key={'back'} className={styles.link} to={`/developers`} title="назад">⇦</NavLink>
+                <><NavLink key={'back'} className={styles.link} to={`/developers`} title='назад'>⇦</NavLink>
                     <h1>{props.developer.full_name}</h1>
                     <table className={styles.developerInfo}>
                         <tr>
@@ -48,7 +48,7 @@ let DeveloperInfo = (props) => {
                         <tr>
                             <td><DeleteDeveloperFormRedux onSubmit={onSubmit} /></td>
                         </tr>
-                    </table></> : <Redirect to="/developers" />}
+                    </table></> : <Redirect to='/developers' />}
         </div>
     )
 }

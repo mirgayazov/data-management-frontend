@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import OrderInfo from "./OrderInfo";
-import { withRouter } from "react-router";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import OrderInfo from './OrderInfo';
+import { withRouter } from 'react-router';
 
 
 class OrderInfoContainer extends React.Component {

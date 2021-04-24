@@ -1,9 +1,9 @@
-import s from "./FormControls.module.css";
+import s from './FormControls.module.css';
 
 const FormControl = ({ input, meta, child, ...props }) => {
     const hasErr = meta.touched && meta.error;
     return (
-        <div className={s.formControl + (hasErr ? " " + s.error : "")}>
+        <div className={s.formControl + (hasErr ? ' ' + s.error : '')}>
             <div className={s.tooltip}>
                 {props.children}
                 {hasErr && <span className={s.tooltiptext}>{meta.error} <span className={s.blink}>❗</span></span>}

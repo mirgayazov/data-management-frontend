@@ -1,8 +1,8 @@
-import { testersAPI } from "../api/api"
+import { testersAPI } from '../api/api'
 
-const ADD_TESTER = "ADD_TESTER"
-const SET_TESTERS = "SET_TESTERS"
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
+const ADD_TESTER = 'ADD_TESTER'
+const SET_TESTERS = 'SET_TESTERS'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 let initialState = {
     testers: [],
@@ -14,7 +14,7 @@ const testersReducer = (state = initialState, action) => {
         case ADD_TESTER:
             return {
                 ...state,
-                testers: [...state.posts, { id: "5", fullName: "Миргаязов К.И.5" }],
+                testers: [...state.posts, { id: '5', fullName: 'Миргаязов К.И.5' }],
             }
         case TOGGLE_IS_FETCHING:
             return {

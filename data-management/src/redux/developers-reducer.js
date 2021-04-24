@@ -1,7 +1,7 @@
-import { developersAPI } from "../api/api"
+import { developersAPI } from '../api/api'
 
-const SET_DEVELOPERS = "SET_DEVELOPERS"
-const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING"
+const SET_DEVELOPERS = 'SET_DEVELOPERS'
+const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
 let initialState = {
     developers: [],

@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
+import React from 'react';
+import { connect } from 'react-redux';
 import { getTesters } from '../../redux/testers-reducer'
 import Testers from './Testers'
-import Panel from "../Panel/Panel";
-import { compose } from "redux";
+import Panel from '../Panel/Panel';
+import { compose } from 'redux';
 const TESTERS = 'TESTERS'
 
 class TestersContainer extends React.Component {

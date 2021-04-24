@@ -1,5 +1,5 @@
 import './App.css';
-import { Route } from "react-router-dom"
+import { Route } from 'react-router-dom'
 import { Preloader } from './components/Common/preloader/Preloader';
 import Navbar from './components/Navbar/Navbar';
 // import Footer from './components/Footer/Footer';
@@ -16,23 +16,23 @@ import OrderInfoContainer from './components/Orders/OrderInfo/OrderInfoContainer
 
 function App() {
   return (
-    <div className="app-wrapper">
+    <div className='app-wrapper'>
       <Header />
       <Navbar />
-      <div className="app-wrapper-content">
-        <Route exact path="/load" render={() => <Preloader />} />
+      <div className='app-wrapper-content'>
+        <Route exact path='/load' render={() => <Preloader />} />
 
-        <Route exact path="/testers" render={() => <TestersContainer />} />
-        <Route exact path="/testers/:pn" render={() => <TesterInfoContainer />} />
+        <Route exact path='/testers' render={() => <TestersContainer />} />
+        <Route exact path='/testers/:pn' render={() => <TesterInfoContainer />} />
 
-        <Route exact path="/developers" render={() => <DevelopersContainer />} />
-        <Route exact path="/developers/:pn" render={() => <DeveloperInfoContainer />} />
+        <Route exact path='/developers' render={() => <DevelopersContainer />} />
+        <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer />} />
 
-        <Route exact path="/orders" render={() => <OrdersContainer />} />
-        <Route exact path="/orders/:id" render={() => <OrderInfoContainer />} />
+        <Route exact path='/orders' render={() => <OrdersContainer />} />
+        <Route exact path='/orders/:id' render={() => <OrderInfoContainer />} />
 
-        <Route exact path="/customers" render={() => <CustomersContainer />} />
-        <Route exact path="/customers/:id" render={() => <CustomerInfoContainer />} />
+        <Route exact path='/customers' render={() => <CustomersContainer />} />
+        <Route exact path='/customers/:id' render={() => <CustomerInfoContainer />} />
       </div>
       {/* <Footer /> */}
     </div>

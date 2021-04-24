@@ -1,8 +1,8 @@
-import React from "react";
-import { connect } from "react-redux";
-import { compose } from "redux";
-import TesterInfo from "./TesterInfo";
-import { withRouter } from "react-router";
+import React from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import TesterInfo from './TesterInfo';
+import { withRouter } from 'react-router';
 import { updateTester } from '../../../redux/testers-reducer'
 
 

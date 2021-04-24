@@ -1,4 +1,4 @@
-import { FormikCreateTester } from '../Forms/Testers/Testers'
+import { CreateTesterForm } from '../Forms/Testers/Testers'
 import { createNewTester } from '../../redux/testers-reducer'
 import { createNewDeveloper } from '../../redux/developers-reducer'
 import { createNewCustomer } from '../../redux/customers-reducer'
@@ -8,25 +8,25 @@ import styles from './Panel.module.css'
 import React from 'react';
 import { AddNewDeveloperFormRedux } from '../Forms/Developers/Developers';
 import { AddNewCustomerFormRedux } from '../Forms/Customers/Customers';
-import { AddNewOrderFormRedux } from '../Forms/Orders/Orders';
+import { CreateOrderForm } from '../Forms/Orders/Orders';
 
 class Panel extends React.Component {
   state = {
-    closeBtndisplay: "none",
-    addBtndisplay: "block",
+    closeBtndisplay: 'none',
+    addBtndisplay: 'block',
   }
 
   activateEditMode = () => {
     this.setState({
-      closeBtndisplay: "block",
-      addBtndisplay: "none",
+      closeBtndisplay: 'block',
+      addBtndisplay: 'none',
     })
   }
 
   deactivateEditMode = () => {
     this.setState({
-      closeBtndisplay: "none",
-      addBtndisplay: "block",
+      closeBtndisplay: 'none',
+      addBtndisplay: 'block',
     })
   }
 
@@ -63,10 +63,10 @@ class Panel extends React.Component {
           <div style={{ display: this.state.closeBtndisplay }}>
             <hr />
             <p></p>
-            {this.props.target === 'TESTERS' ? <FormikCreateTester onSubmit={this.addNewTester} /> : <></>}
+            {this.props.target === 'TESTERS' ? <CreateTesterForm onSubmit={this.addNewTester} /> : <></>}
             {this.props.target === 'DEVELOPERS' ? <AddNewDeveloperFormRedux onSubmit={this.addNewDeveloper} /> : <></>}
             {this.props.target === 'CUSTOMERS' ? <AddNewCustomerFormRedux onSubmit={this.addNewCustomer} /> : <></>}
-            {this.props.target === 'ORDERS' ? <AddNewOrderFormRedux onSubmit={this.addNewOrder} /> : <></>}
+            {this.props.target === 'ORDERS' ? <CreateOrderForm onSubmit={this.addNewOrder} /> : <></>}
           </div>
         </div>
       </div>

@@ -1,10 +1,10 @@
-import styles from "./CustomerInfo.module.css";
-import React from "react";
-import { reduxForm } from "redux-form";
-import { connect } from "react-redux";
+import styles from './CustomerInfo.module.css';
+import React from 'react';
+import { reduxForm } from 'redux-form';
+import { connect } from 'react-redux';
 import { deleteCustomer } from '../../../redux/customers-reducer'
-import { Redirect } from "react-router";
-import { NavLink } from "react-router-dom";
+import { Redirect } from 'react-router';
+import { NavLink } from 'react-router-dom';
 
 const deletecustomerForm = (props) => {
     return (
@@ -15,7 +15,7 @@ const deletecustomerForm = (props) => {
 }
 
 const DeletecustomerFormRedux = reduxForm({
-    form: "deletecustomerForm"
+    form: 'deletecustomerForm'
 })(deletecustomerForm)
 
 let customerInfo = (props) => {
@@ -26,7 +26,7 @@ let customerInfo = (props) => {
     return (
         <div className={styles.customer}>
             {props.customer ?
-                <><NavLink key={'back'} className={styles.link} to={`/customers`} title="назад">⇦</NavLink>
+                <><NavLink key={'back'} className={styles.link} to={`/customers`} title='назад'>⇦</NavLink>
                     <h1>{props.customer.full_name}</h1>
                     <table className={styles.customerInfo}>
                         <tr>
@@ -51,7 +51,7 @@ let customerInfo = (props) => {
                         <tr>
                             <td><DeletecustomerFormRedux onSubmit={onSubmit} /></td>
                         </tr>
-                    </table></> : <Redirect to="/customers" />}
+                    </table></> : <Redirect to='/customers' />}
         </div>
     )
 }
