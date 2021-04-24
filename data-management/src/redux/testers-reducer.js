@@ -65,6 +65,13 @@ export const createNewTester = (tester) => (dispatch) => {
         })
 }
 
+export const updateTester = (tester) => (dispatch) => {
+    testersAPI.updateTester(tester)
+        .then(response => {
+            dispatch(getTesters())
+        })
+}
+
 export const deleteTester = (pn) => (dispatch) => {
     testersAPI.deleteTester(pn)
         .then(response => {

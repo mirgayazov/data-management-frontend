@@ -1,6 +1,6 @@
 import styles from './Customers.module.css'
 import { Field, reduxForm } from 'redux-form'
-import { required, maxLength, passport, telephoneNumber, minValue } from '../../../utils/validators/validators';
+import { required, maxLength, passport, telephoneNumber } from '../../../utils/validators/validators';
 import { Input } from '../../Common/FormControls/FormControls';
 
 const maxLength11 = maxLength(11);

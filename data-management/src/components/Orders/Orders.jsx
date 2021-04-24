@@ -56,10 +56,10 @@ class Orders extends React.Component {
         const target = this.myRef.current.value;
         let code = /^\d+$/.test(target);
         if (code) {
-            let foundUsers = this.state.rollbackOrders.filter(tester => tester.personnel_number === target)
+            let foundUsers = this.state.rollbackOrders.filter(order => order.id === target)
             this.setState({ orders: foundUsers });
         } else {
-            let foundUsers = this.state.rollbackOrders.filter(tester => levenshtein(tester.full_name, target) <= 5)
+            let foundUsers = this.state.rollbackOrders.filter(order => levenshtein(order.name, target) <= 5)
             this.setState({ orders: foundUsers });
         }
     }
@@ -79,6 +79,11 @@ class Orders extends React.Component {
     render() {
         return (
             <div className={styles.order}>
+                 <div className={styles.tools}>
+                    <input ref={this.myRef} placeholder='Введите название заказа'></input>
+                    <button onClick={() => this.findOrder()}>поиск</button>
+                    <button onClick={() => this.rollback()}>сброс</button>
+                </div>
                 {this.state.orders.map(o => {
                     return (
                         <NavLink key={o.id} className={styles.link} to={`/orders/${o.id}`}>

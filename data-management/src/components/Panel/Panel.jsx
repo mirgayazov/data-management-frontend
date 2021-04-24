@@ -1,4 +1,4 @@
-import { AddNewTesterFormRedux } from '../Forms/Testers/Testers'
+import { FormikCreateTester } from '../Forms/Testers/Testers'
 import { createNewTester } from '../../redux/testers-reducer'
 import { createNewDeveloper } from '../../redux/developers-reducer'
 import { createNewCustomer } from '../../redux/customers-reducer'
@@ -63,7 +63,7 @@ class Panel extends React.Component {
           <div style={{ display: this.state.closeBtndisplay }}>
             <hr />
             <p></p>
-            {this.props.target === 'TESTERS' ? <AddNewTesterFormRedux onSubmit={this.addNewTester} /> : <></>}
+            {this.props.target === 'TESTERS' ? <FormikCreateTester onSubmit={this.addNewTester} /> : <></>}
             {this.props.target === 'DEVELOPERS' ? <AddNewDeveloperFormRedux onSubmit={this.addNewDeveloper} /> : <></>}
             {this.props.target === 'CUSTOMERS' ? <AddNewCustomerFormRedux onSubmit={this.addNewCustomer} /> : <></>}
             {this.props.target === 'ORDERS' ? <AddNewOrderFormRedux onSubmit={this.addNewOrder} /> : <></>}
@@ -73,5 +73,7 @@ class Panel extends React.Component {
     );
   }
 };
+
+
 
 export default connect(null, { createNewTester, createNewDeveloper, createNewCustomer, createNewOrder })(Panel);

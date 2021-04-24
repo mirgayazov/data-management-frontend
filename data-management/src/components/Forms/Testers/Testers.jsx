@@ -1,25 +1,131 @@
 import styles from './Testers.module.css'
-import { Field, reduxForm } from 'redux-form'
-import { required, maxLength, passport, telephoneNumber, minValue } from '../../../utils/validators/validators';
-import { Input } from '../../Common/FormControls/FormControls';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const maxLength11 = maxLength(11);
-const minValue4 = minValue(4);
-const minValue15000 = minValue(15000);
-
-const AddNewTesterForm = (props) => {
+export const FormikCreateTester = (props) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="ФИО сотрудника" name={'fullName'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="Специализация" name={'testMethod'} />
-      <Field className={styles.item} component={Input} validate={[required, minValue4]} placeholder="Опыт работы" name={'workExperience'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder="Текущая должность" name={'position'} />
-      <Field className={styles.item} component={Input} validate={[required, telephoneNumber]} placeholder="Номер телефона" name={'telephoneNumber'} />
-      <Field className={styles.item} component={Input} validate={[required, passport, maxLength11]} placeholder="Паспортные данные через пробел" name={'passportDetails'} />
-      <Field className={styles.item} component={Input} validate={[required, minValue15000]} placeholder="Зарплата" name={'salary'} />
-      <button>Добавить</button>
-    </form>
-  );
-};
+    <Formik
+      initialValues={{ fullName: '', testMethod: '', position: '', passportSeries: '', passportNumber: '', salary: '', telephoneNumber: '', workExperience: '', }}
+      onSubmit={(tester, { setSubmitting }) => {
+        props.onSubmit(tester)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.testerInfo}>
+            <tbody>
+              <tr>
+                <td>ФИО</td><td><Field className={styles.item} type="text" name="fullName" />
+                  <ErrorMessage name="fullName" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Должность</td><td><Field className={styles.item} type="text" name="position" />
+                  <ErrorMessage name="position" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Специализация</td><td><Field className={styles.item} type="text" name="testMethod" />
+                  <ErrorMessage name="testMethod" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Серия паспорта</td><td><Field className={styles.item} type="text" name="passportSeries" />
+                  <ErrorMessage name="passportSeries" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Номер паспорта</td><td><Field className={styles.item} type="text" name="passportNumber" />
+                  <ErrorMessage name="passportNumber" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Зарплата (₽)</td><td><Field className={styles.item} type="text" name="salary" />
+                  <ErrorMessage name="salary" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Контакты</td><td><Field className={styles.item} type="text" name="telephoneNumber" />
+                  <ErrorMessage name="telephoneNumber" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Опыт работы</td><td><Field className={styles.item} type="text" name="workExperience" />
+                  <ErrorMessage name="workExperience" component="div" /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table >
+            <tbody>
+              <tr>
+                <td>
+                  <button type="submit" disabled={isSubmitting}>
+                    Добвить
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
 
-export const AddNewTesterFormRedux = reduxForm({ form: 'AddNewTesterForm' })(AddNewTesterForm);
+export const FormikUpdateTester = (props) => {
+  return (
+    <Formik
+      initialValues={{ fullName: props.tester.full_name, testMethod: props.tester.test_method, position: props.tester.position, passportSeries: props.tester.passport_details.series, passportNumber: props.tester.passport_details.number, salary: props.tester.salary, telephoneNumber: props.tester.telephone_number, workExperience: props.tester.work_experience, }}
+      onSubmit={(tester, { setSubmitting }) => {
+        tester.personnel_number = props.tester.personnel_number
+        props.onSubmit(tester)
+        setSubmitting(false);
+        props.setEditMode(false)
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.testerInfo}>
+            <tbody>
+              <tr>
+                <td>ФИО</td><td><Field className={styles.item} type="text" name="fullName" />
+                  <ErrorMessage name="fullName" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Должность</td><td><Field className={styles.item} type="text" name="position" />
+                  <ErrorMessage name="position" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Специализация</td><td><Field className={styles.item} type="text" name="testMethod" />
+                  <ErrorMessage name="testMethod" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Серия паспорта</td><td><Field className={styles.item} type="text" name="passportSeries" />
+                  <ErrorMessage name="passportSeries" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Номер паспорта</td><td><Field className={styles.item} type="text" name="passportNumber" />
+                  <ErrorMessage name="passportNumber" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Зарплата (₽)</td><td><Field className={styles.item} type="text" name="salary" />
+                  <ErrorMessage name="salary" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Контакты</td><td><Field className={styles.item} type="text" name="telephoneNumber" />
+                  <ErrorMessage name="telephoneNumber" component="div" /></td>
+              </tr>
+              <tr>
+                <td>Опыт работы</td><td><Field className={styles.item} type="text" name="workExperience" />
+                  <ErrorMessage name="workExperience" component="div" /></td>
+              </tr>
+              <tr>
+                <td colSpan={2}>
+                  <button type="submit" disabled={isSubmitting}>
+                    Сохранить
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
+
+

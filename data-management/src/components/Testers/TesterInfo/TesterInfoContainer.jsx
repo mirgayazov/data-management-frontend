@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import TesterInfo from "./TesterInfo";
 import { withRouter } from "react-router";
+import { updateTester } from '../../../redux/testers-reducer'
 
 
 class TesterInfoContainer extends React.Component {
@@ -20,6 +21,6 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {}),
+    connect(mapStateToProps, { updateTester }),
     withRouter
 )(TesterInfoContainer);

@@ -16,3 +16,32 @@
   display: inline-block;
   color: black;
 }
+
+
+.tools {
+  border: none;
+  outline: none;
+  background: rgb(145, 136, 136);
+  font-size: 15px;
+  padding: 10px 10px 10px 5px;
+  margin-bottom: 10px; 
+  border-radius: 25px; 
+}
+
+.tools input{
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 300px;
+  outline: none;
+  border: 0;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.tools button {
+  margin-right: 10px;
+  outline: none;
+  border: 0;
+  padding: 10px;
+  cursor: pointer;
+}
