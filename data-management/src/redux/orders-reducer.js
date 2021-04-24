@@ -55,6 +55,14 @@ export const createNewOrder = (order) => (dispatch) => {
         })
 }
 
+export const updateOrder = (order) => (dispatch) => {
+    debugger
+    ordersAPI.updateOrder(order)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
 export const deleteOrder = (pn) => (dispatch) => {
     ordersAPI.deleteOrder(pn)
         .then(response => {

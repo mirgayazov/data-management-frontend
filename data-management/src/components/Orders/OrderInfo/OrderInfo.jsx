@@ -2,7 +2,7 @@ import styles from './OrderInfo.module.css';
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
-import { deleteOrder } from '../../../redux/orders-reducer'
+import { deleteOrder, updateOrder } from '../../../redux/orders-reducer'
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { Input, Textarea } from '../../Common/FormControls/FormControls';
@@ -57,19 +57,21 @@ const OrderInfo = (props) => {
 
     const [editMode, setEditMode] = useState(false);
 
-    const updateOrder = (tester) => {
-        props.updateTester(tester)
+    const updateOrder = (order) => {
+        props.updateOrder(order)
     }
 
     return (
         <div className={styles.order}>
             <NavLink key={'back'} className={styles.link} to={`/orders`} title='назад'>⇦</NavLink>
-            {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} /> :
+            {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
                 props.order ?
                     <div>
-                        <h1>{props.order.name}</h1>
                         <table className={styles.orderInfo}>
                             <tbody>
+                                <tr>
+                                    <td>Название</td><td>{props.order.name}</td>
+                                </tr>
                                 <tr>
                                     <td>Номер заказчика</td><td>{props.order.customer_id}</td>
                                 </tr>
@@ -101,4 +103,4 @@ const OrderInfo = (props) => {
     )
 }
 
-export default connect(null, { deleteOrder })(OrderInfo);
+export default connect(null, { deleteOrder, updateOrder })(OrderInfo);
