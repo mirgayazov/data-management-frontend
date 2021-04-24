@@ -1,23 +1,10 @@
 import styles from './TesterInfo.module.css';
 import React, { useState } from 'react';
-import { reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { deleteTester, updateTester } from '../../../redux/testers-reducer'
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { UpdateTesterForm } from '../../Forms/Testers/Testers';
-
-const deleteTesterForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <button>Удалить</button>
-        </form>
-    )
-}
-
-const DeleteTesterFormRedux = reduxForm({
-    form: 'deleteTesterForm'
-})(deleteTesterForm)
 
 let TesterInfo = (props) => {
     const [editMode, setEditMode] = useState(false);
@@ -26,17 +13,16 @@ let TesterInfo = (props) => {
         props.updateTester(tester)
     }
 
-    const onSubmit = (formData) => {
+    const deleteTester = () => {
         props.deleteTester(props.tester.personnel_number)
     }
 
     return (
         <div className={styles.tester}>
             <NavLink key={'back'} className={styles.link} to={`/testers`} title='назад'>⇦</NavLink>
-            {editMode ? <UpdateTesterForm tester={props.tester} onSubmit={updateTester} setEditMode={setEditMode}/> :
+            {editMode ? <UpdateTesterForm tester={props.tester} onSubmit={updateTester} setEditMode={setEditMode} /> :
                 props.tester ?
                     <div>
-
                         <table className={styles.testerInfo}>
                             <tbody>
                                 <tr>
@@ -71,7 +57,7 @@ let TesterInfo = (props) => {
             <table className={styles.testerInfo2}>
                 <tbody>
                     <tr>
-                        <td><DeleteTesterFormRedux onSubmit={onSubmit} /></td>
+                        <td><button onClick={() => deleteTester()}>Удалить</button></td>
                         <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
                     </tr>
                 </tbody>

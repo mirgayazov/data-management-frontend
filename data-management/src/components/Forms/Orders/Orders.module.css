@@ -31,6 +31,7 @@ button {
   box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
 }
 
+
 .order {
   margin: 15px;
   border-radius: 20px;
@@ -65,4 +66,11 @@ button {
   padding: 15px 15px 15px 15px;
   background: #ecf0f3; 
   box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+}
+
+.orderInfo3 td{
+  padding: 10px;
+  margin-bottom: 25px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
 }

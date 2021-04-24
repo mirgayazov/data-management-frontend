@@ -12,7 +12,7 @@ export const CreateOrderForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.orderInfo}>
+          <table className={styles.orderInfo3}>
             <tbody>
               <tr>
                 <td>Название</td><td><Field className={styles.item} type='text' name='name' />
@@ -31,7 +31,7 @@ export const CreateOrderForm = (props) => {
                   <ErrorMessage name='customerFeedback' component='div' /></td>
               </tr>
               <tr>
-                <td>Техническое задание</td><td><Field className={styles.item} type='text' name='technicalTask' />
+                <td>Техническое задание</td><td><Field className={styles.item} type='text' as='textarea' name='technicalTask' />
                   <ErrorMessage name='technicalTask' component='div' /></td>
               </tr>
               <tr>
@@ -45,7 +45,7 @@ export const CreateOrderForm = (props) => {
               <tr>
                 <td>
                   <button type='submit' disabled={isSubmitting}>
-                    Добвить
+                    Добавить
                 </button>
                 </td>
               </tr>

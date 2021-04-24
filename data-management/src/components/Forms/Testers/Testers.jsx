@@ -12,7 +12,7 @@ export const CreateTesterForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.testerInfo}>
+          <table className={styles.testerInfo3}>
             <tbody>
               <tr>
                 <td>ФИО</td><td><Field className={styles.item} type='text' name='fullName' />
