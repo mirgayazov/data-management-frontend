@@ -18,12 +18,18 @@ const OrderInfo = (props) => {
     }
 
     return (
-        <div className={styles.order}>
-            <NavLink key={'back'} className={styles.link} to={`/orders`} title='назад'>⇦</NavLink>
+        <div className={styles.component}>
+            <table className={styles.componentInfo2}>
+                <tbody>
+                    <tr>
+                        <td> <NavLink key={'back'} className={styles.link} to={`/orders`} title='назад'>⇦</NavLink></td>
+                    </tr>
+                </tbody>
+            </table>
             {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
                 props.order ?
                     <div>
-                        <table className={styles.orderInfo}>
+                        <table className={styles.componentInfo}>
                             <tbody>
                                 <tr>
                                     <td>Название</td><td>{props.order.name}</td>
@@ -47,7 +53,7 @@ const OrderInfo = (props) => {
                         </table>
                     </div> : <Redirect to='/orders' />
             }
-            <table className={styles.orderInfo2}>
+            <table className={styles.componentInfo2}>
                 <tbody>
                     <tr>
                         <td><button onClick={() => deleteOrder()}>Удалить</button></td>

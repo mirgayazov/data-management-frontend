@@ -12,7 +12,7 @@ export const CreateOrderForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.orderInfo3}>
+          <table className={styles.componentInfo3}>
             <tbody>
               <tr>
                 <td>Название</td><td><Field className={styles.item} type='text' name='name' />
@@ -70,7 +70,7 @@ export const UpdateOrderForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.orderInfo}>
+          <table className={styles.componentInfo}>
             <tbody>
               <tr>
                 <td>Название</td><td><Field className={styles.item} type='text' name='name' />

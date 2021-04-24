@@ -18,12 +18,18 @@ let TesterInfo = (props) => {
     }
 
     return (
-        <div className={styles.tester}>
-            <NavLink key={'back'} className={styles.link} to={`/testers`} title='назад'>⇦</NavLink>
+        <div className={styles.component}>
+            <table className={styles.componentInfo2}>
+                <tbody>
+                    <tr>
+                        <td><NavLink key={'back'} className={styles.link} to={`/testers`} title='назад'>⇦</NavLink></td>
+                    </tr>
+                </tbody>
+            </table>
             {editMode ? <UpdateTesterForm tester={props.tester} onSubmit={updateTester} setEditMode={setEditMode} /> :
                 props.tester ?
                     <div>
-                        <table className={styles.testerInfo}>
+                        <table className={styles.componentInfo}>
                             <tbody>
                                 <tr>
                                     <td>ФИО</td><td>{props.tester.full_name}</td>
@@ -47,14 +53,14 @@ let TesterInfo = (props) => {
                                     <td>Контакты</td><td>{props.tester.telephone_number}</td>
                                 </tr>
                                 <tr>
-                                    <td>Опыт работы</td><td>{props.tester.work_experience}</td>
+                                    <td>Трудовой стаж</td><td>{props.tester.work_experience}</td>
                                 </tr>
                             </tbody>
                         </table>
 
                     </div> : <Redirect to='/testers' />
             }
-            <table className={styles.testerInfo2}>
+            <table className={styles.componentInfo2}>
                 <tbody>
                     <tr>
                         <td><button onClick={() => deleteTester()}>Удалить</button></td>

@@ -21,6 +21,7 @@ export const ordersAPI = {
 export const developersAPI = {
     getDevelopers: () => server.get('developers').then(response => response.data.developers),
     createNewDeveloper(developer) { return server.post('developers', { developer }) },
+    updateDeveloper(developer) { return server.put('developers', { developer }) },
     deleteDeveloper(pn) { return server.delete('developers', { data: { pn } }) },
 }
 

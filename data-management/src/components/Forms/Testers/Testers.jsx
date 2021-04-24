@@ -12,7 +12,7 @@ export const CreateTesterForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.testerInfo3}>
+          <table className={styles.componentInfo3}>
             <tbody>
               <tr>
                 <td>ФИО</td><td><Field className={styles.item} type='text' name='fullName' />
@@ -43,7 +43,7 @@ export const CreateTesterForm = (props) => {
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
               </tr>
               <tr>
-                <td>Опыт работы</td><td><Field className={styles.item} type='text' name='workExperience' />
+                <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />
                   <ErrorMessage name='workExperience' component='div' /></td>
               </tr>
             </tbody>
@@ -53,7 +53,7 @@ export const CreateTesterForm = (props) => {
               <tr>
                 <td>
                   <button type='submit' disabled={isSubmitting}>
-                    Добвить
+                    Добавить
                 </button>
                 </td>
               </tr>
@@ -85,7 +85,7 @@ export const UpdateTesterForm = (props) => {
     >
       {({ isSubmitting }) => (
         <Form>
-          <table className={styles.testerInfo}>
+          <table className={styles.componentInfo}>
             <tbody>
               <tr>
                 <td>ФИО</td><td><Field className={styles.item} type='text' name='fullName' />
@@ -116,7 +116,7 @@ export const UpdateTesterForm = (props) => {
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
               </tr>
               <tr>
-                <td>Опыт работы</td><td><Field className={styles.item} type='text' name='workExperience' />
+                <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />
                   <ErrorMessage name='workExperience' component='div' /></td>
               </tr>
               <tr>

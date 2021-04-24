@@ -15,7 +15,7 @@ class OrderContainer extends React.Component {
         return (
             <div>
                 <Panel target={ORDERS} />
-                <Orders orders={this.props.orders} />
+                {this.props.orders.length === 0 ? null : <Orders orders={this.props.orders} />}
             </div>
         )
     }

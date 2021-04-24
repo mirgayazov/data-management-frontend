@@ -15,7 +15,7 @@ class DevelopersContainer extends React.Component {
         return (
             <div>
                 <Panel target={DEVELOPERS} />
-                <Developers developers={this.props.developers} />
+                {this.props.developers.length === 0 ? null : <Developers developers={this.props.developers} />}
             </div>
         )
     }

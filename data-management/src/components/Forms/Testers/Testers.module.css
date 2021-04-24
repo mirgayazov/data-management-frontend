@@ -19,7 +19,7 @@ button {
   cursor: pointer;
 }
 
-.tester .item {
+.component .item {
   display: inline-block;
   margin: 15px;
   border-radius: 20px;
@@ -31,14 +31,14 @@ button {
   box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
 }
 
-.testerInfo3 td{
+.componentInfo3 td{
   padding: 10px;
   margin: 55px;
   padding: 15px 15px 15px 15px;
   background: #ecf0f3; 
 }
 
-.tester {
+.component {
   margin: 15px;
   border-radius: 20px;
   border-radius: 40px;
@@ -56,7 +56,7 @@ button {
   color: black;
 }
 
-.testerInfo td{
+.componentInfo td{
   padding: 10px;
   margin-bottom: 25px;
   border-radius: 1px;
@@ -65,7 +65,7 @@ button {
   box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
 }
 
-.testerInfo2 td{
+.componentInfo2 td{
   padding: 10px;
   margin-bottom: 25px;
   border-radius: 10px;

@@ -6,9 +6,9 @@ import { createNewOrder } from '../../redux/orders-reducer'
 import { connect } from 'react-redux';
 import styles from './Panel.module.css'
 import React from 'react';
-import { AddNewDeveloperFormRedux } from '../Forms/Developers/Developers';
 import { AddNewCustomerFormRedux } from '../Forms/Customers/Customers';
 import { CreateOrderForm } from '../Forms/Orders/Orders';
+import { CreateDeveloperForm } from '../Forms/Developers/Developers'
 
 class Panel extends React.Component {
   state = {
@@ -63,10 +63,10 @@ class Panel extends React.Component {
           <div style={{ display: this.state.closeBtndisplay }}>
             <hr />
             <p></p>
-            {this.props.target === 'TESTERS' ? <CreateTesterForm onSubmit={this.addNewTester} /> : <></>}
-            {this.props.target === 'DEVELOPERS' ? <AddNewDeveloperFormRedux onSubmit={this.addNewDeveloper} /> : <></>}
-            {this.props.target === 'CUSTOMERS' ? <AddNewCustomerFormRedux onSubmit={this.addNewCustomer} /> : <></>}
-            {this.props.target === 'ORDERS' ? <CreateOrderForm onSubmit={this.addNewOrder} /> : <></>}
+            {this.props.target === 'TESTERS' ? <CreateTesterForm onSubmit={this.addNewTester} /> : null}
+            {this.props.target === 'DEVELOPERS' ? <CreateDeveloperForm onSubmit={this.addNewDeveloper} /> : null}
+            {this.props.target === 'CUSTOMERS' ? <AddNewCustomerFormRedux onSubmit={this.addNewCustomer} /> : null}
+            {this.props.target === 'ORDERS' ? <CreateOrderForm onSubmit={this.addNewOrder} /> : null}
           </div>
         </div>
       </div>

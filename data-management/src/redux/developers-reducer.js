@@ -62,5 +62,11 @@ export const deleteDeveloper = (pn) => (dispatch) => {
         })
 }
 
+export const updateDeveloper = (developer) => (dispatch) => {
+    developersAPI.updateDeveloper(developer)
+        .then(response => {
+            dispatch(getDevelopers())
+        })
+}
 
 export default developersReducer

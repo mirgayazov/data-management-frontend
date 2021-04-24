@@ -15,7 +15,7 @@ class TestersContainer extends React.Component {
         return (
             <div>
                 <Panel target={TESTERS} />
-                <Testers testers={this.props.testers} />
+                {this.props.testers.length === 0 ? null : <Testers testers={this.props.testers} />}
             </div>
         )
     }
