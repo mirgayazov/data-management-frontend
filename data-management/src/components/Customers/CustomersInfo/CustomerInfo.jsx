@@ -1,59 +1,70 @@
 import styles from './CustomerInfo.module.css';
-import React from 'react';
-import { reduxForm } from 'redux-form';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { deleteCustomer } from '../../../redux/customers-reducer'
+import { deleteCustomer, updateСustomer } from '../../../redux/customers-reducer'
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
+import { UpdateCustomerForm } from '../../Forms/Customers/Customers';
 
-const deletecustomerForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <button>❌</button>
-        </form>
-    )
-}
+let CustomerInfo = (props) => {
+    const [editMode, setEditMode] = useState(false);
 
-const DeletecustomerFormRedux = reduxForm({
-    form: 'deletecustomerForm'
-})(deletecustomerForm)
-
-let customerInfo = (props) => {
-    const onSubmit = (formData) => {
+    const deleteCustomer = () => {
         props.deleteCustomer(props.customer.id)
     }
 
+    const updateСustomer = (customer) => {
+        debugger
+        props.updateСustomer(customer)
+    }
+
     return (
-        <div className={styles.customer}>
-            {props.customer ?
-                <><NavLink key={'back'} className={styles.link} to={`/customers`} title='назад'>⇦</NavLink>
-                    <h1>{props.customer.full_name}</h1>
-                    <table className={styles.customerInfo}>
-                        <tr>
-                            <td>Адрес</td><td>{props.customer.address}</td>
-                        </tr>
-                        <tr>
-                            <td>Электронная почта</td><td>{props.customer.email}</td>
-                        </tr>
-                        <tr>
-                            <td>Серия паспорта</td><td>{props.customer.passport_details.series}</td>
-                        </tr>
-                        <tr>
-                            <td>Номер паспорта</td><td>{props.customer.passport_details.number}</td>
-                        </tr>
-                        <tr>
-                            <td>Контакты</td><td>{props.customer.telephone_number}</td>
-                        </tr>
-                        <tr>
-                            <td>Примечания</td><td>{props.customer.remarks_to_customer}</td>
-                        </tr>
-                    </table><table className={styles.customerInfo2}>
-                        <tr>
-                            <td><DeletecustomerFormRedux onSubmit={onSubmit} /></td>
-                        </tr>
-                    </table></> : <Redirect to='/customers' />}
+        <div className={styles.component}>
+            <table className={styles.componentInfo2}>
+                <tbody>
+                    <tr>
+                        <td> <NavLink key={'back'} className={styles.link} to={`/customers`} title='назад'>⇦</NavLink></td>
+                    </tr>
+                </tbody>
+            </table>
+            {editMode ? <UpdateCustomerForm onSubmit={updateСustomer} customer={props.customer} setEditMode={setEditMode} /> : props.customer ?
+                <div>
+                    <table className={styles.componentInfo}>
+                        <tbody>
+                            <tr>
+                                <td>ФИО</td><td>{props.customer.full_name}</td>
+                            </tr>
+                            <tr>
+                                <td>Адрес</td><td>{props.customer.address}</td>
+                            </tr>
+                            <tr>
+                                <td>Электронная почта</td><td>{props.customer.email}</td>
+                            </tr>
+                            <tr>
+                                <td>Серия паспорта</td><td>{props.customer.passport_details.series}</td>
+                            </tr>
+                            <tr>
+                                <td>Номер паспорта</td><td>{props.customer.passport_details.number}</td>
+                            </tr>
+                            <tr>
+                                <td>Контакты</td><td>{props.customer.telephone_number}</td>
+                            </tr>
+                            <tr>
+                                <td>Примечания</td><td>{props.customer.remarks_to_customer}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> : <Redirect to='/customers' />}
+            <table className={styles.componentInfo2}>
+                <tbody>
+                    <tr>
+                        <td><button onClick={deleteCustomer}>Удалить</button></td>
+                        <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     )
 }
 
-export default connect(null, { deleteCustomer })(customerInfo);
+export default connect(null, { deleteCustomer, updateСustomer })(CustomerInfo);

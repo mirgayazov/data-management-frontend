@@ -4,7 +4,6 @@ import { compose } from 'redux';
 import { withRouter } from 'react-router';
 import CustomerInfo from './CustomerInfo';
 
-
 class CustomerInfoContainer extends React.Component {
     render() {
         return (

@@ -53,6 +53,13 @@ export const createNewCustomer = (customer) => (dispatch) => {
         })
 }
 
+export const updateСustomer = (customer) => (dispatch) => {
+    customersAPI.updateСustomer(customer)
+        .then(response => {
+            dispatch(getCustomers())
+        })
+}
+
 export const deleteCustomer = (id) => (dispatch) => {
     customersAPI.deleteСustomer(id)
         .then(response => {

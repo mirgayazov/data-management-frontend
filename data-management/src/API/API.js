@@ -28,5 +28,6 @@ export const developersAPI = {
 export const customersAPI = {
     getCustomers: () => server.get('customers').then(response => response.data.customers),
     createNewСustomer(customer) { return server.post('customers', { customer }) },
+    updateСustomer(customer) { return server.put('customers', { customer }) },
     deleteСustomer(id) { return server.delete('customers', { data: { id } }) },
 }

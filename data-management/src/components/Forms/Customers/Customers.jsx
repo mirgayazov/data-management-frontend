@@ -1,24 +1,128 @@
 import styles from './Customers.module.css'
-import { Field, reduxForm } from 'redux-form'
-import { required, maxLength, passport, telephoneNumber } from '../../../utils/validators/validators';
-import { Input } from '../../Common/FormControls/FormControls';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const maxLength11 = maxLength(11);
-// const minValue4 = minValue(4);
-// const minValue15000 = minValue(15000);
-
-const AddNewCustomerForm = (props) => {
+export const CreateCustomerForm = (props) => {
   return (
-    <form onSubmit={props.handleSubmit}>
-      <Field className={styles.item} component={Input} validate={[required]} placeholder='ФИО клиента' name={'fullName'} />
-      <Field className={styles.item} component={Input} validate={[required, telephoneNumber]} placeholder='Номер телефона' name={'telephoneNumber'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder='Адрес' name={'address'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder='Email' name={'email'} />
-      <Field className={styles.item} component={Input} validate={[required]} placeholder='Отзыв' name={'remarks'} />
-      <Field className={styles.item} component={Input} validate={[required, passport, maxLength11]} placeholder='Паспортные данные через пробел' name={'passportDetails'} />
-      <button>Добавить</button>
-    </form>
-  );
-};
+    <Formik
+      initialValues={{ fullName: '', passportSeries: '', passportNumber: '', telephoneNumber: '', address: '', email: '', remarksToCustomer: '', }}
+      onSubmit={(customer, { setSubmitting }) => {
+        props.onSubmit(customer)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo3}>
+            <tbody>
+              <tr>
+                <td>ФИО</td><td><Field className={styles.item} type='text' name='fullName' />
+                  <ErrorMessage name='fullName' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Серия паспорта</td><td><Field className={styles.item} type='text' name='passportSeries' />
+                  <ErrorMessage name='passportSeries' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Номер паспорта</td><td><Field className={styles.item} type='text' name='passportNumber' />
+                  <ErrorMessage name='passportNumber' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Контакты</td><td><Field className={styles.item} type='text' name='telephoneNumber' />
+                  <ErrorMessage name='telephoneNumber' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Адрес</td><td><Field className={styles.item} type='text' name='address' />
+                  <ErrorMessage name='address' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Отзыв о заказчике</td><td><Field className={styles.item} type='text' name='remarksToCustomer' />
+                  <ErrorMessage name='remarksToCustomer' component='div' /></td>
+              </tr>
+            </tbody>
+          </table>
+          <table >
+            <tbody>
+              <tr>
+                <td>
+                  <button type='submit' disabled={isSubmitting}>
+                    Добавить
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
 
-export const AddNewCustomerFormRedux = reduxForm({ form: 'AddNewCustomerForm' })(AddNewCustomerForm);
+export const UpdateCustomerForm = (props) => {
+  return (
+    <Formik
+      initialValues={{ fullName: props.customer.full_name, passportSeries: props.customer.passport_details.series, passportNumber: props.customer.passport_details.number, telephoneNumber: props.customer.telephone_number, address: props.customer.address, email: props.customer.email, remarksToCustomer: props.customer.remarks_to_customer, }}
+      validate={values => {
+        const errors = {};
+        if (!values.telephoneNumber) {
+          errors.telephoneNumber = 'Required';
+        }
+        return errors;
+      }}
+      onSubmit={(customer, { setSubmitting }) => {
+        customer.id = props.customer.id
+        props.onSubmit(customer)
+        setSubmitting(false);
+        props.setEditMode(false)
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>ФИО</td><td><Field className={styles.item} type='text' name='fullName' />
+                  <ErrorMessage name='fullName' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Серия паспорта</td><td><Field className={styles.item} type='text' name='passportSeries' />
+                  <ErrorMessage name='passportSeries' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Номер паспорта</td><td><Field className={styles.item} type='text' name='passportNumber' />
+                  <ErrorMessage name='passportNumber' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Контакты</td><td><Field className={styles.item} type='text' name='telephoneNumber' />
+                  <ErrorMessage name='telephoneNumber' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Адрес</td><td><Field className={styles.item} type='text' name='address' />
+                  <ErrorMessage name='address' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Отзыв о заказчике</td><td><Field className={styles.item} type='text' name='remarksToCustomer' />
+                  <ErrorMessage name='remarksToCustomer' component='div' /></td>
+              </tr>
+              <tr>
+                <td colSpan={2}>
+                  <button type='submit' disabled={isSubmitting}>
+                    Сохранить
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+

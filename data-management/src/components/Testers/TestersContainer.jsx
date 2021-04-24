@@ -4,7 +4,6 @@ import { getTesters } from '../../redux/testers-reducer'
 import Testers from './Testers'
 import Panel from '../Panel/Panel';
 import { compose } from 'redux';
-const TESTERS = 'TESTERS'
 
 class TestersContainer extends React.Component {
     componentDidMount() {
@@ -14,7 +13,7 @@ class TestersContainer extends React.Component {
     render() {
         return (
             <div>
-                <Panel target={TESTERS} />
+                <Panel target={'TESTERS'} />
                 {this.props.testers.length === 0 ? null : <Testers testers={this.props.testers} />}
             </div>
         )
@@ -24,7 +23,6 @@ class TestersContainer extends React.Component {
 const mapStateToProps = (state) => {
     return {
         testers: state.testersPage.testers,
-        isFetching: state.testersPage.isFetching,
     }
 }
 
