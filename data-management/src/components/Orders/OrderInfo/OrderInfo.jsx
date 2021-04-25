@@ -27,6 +27,7 @@ const OrderInfo = (props) => {
     }
 
     const [editMode, setEditMode] = useState(false);
+    // const searchInput = React.createRef();
 
     const [isModal, setModal] = React.useState(false);
     const [selectedColor, setSelectedColor] = React.useState(array);
@@ -102,7 +103,7 @@ const OrderInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <hr className={styles.itemHr}/>
+            <hr className={styles.itemHr} />
             {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
                 props.order ?
                     <div>
@@ -138,11 +139,12 @@ const OrderInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
-            <hr className={styles.itemHr}/>
+            <hr className={styles.itemHr} />
             <table className={styles.componentInfo} style={{ width: "300px" }}>
                 <tbody>
                     <tr>
-                        <td colSpan='3'>Программисты<button onClick={() => setModal(!isModal)}>➕</button></td>
+                        <td colSpan='2'>Программисты</td>
+                        <td><button onClick={() => setModal(!isModal)}>➕</button></td>
                     </tr>
                     {props.order.developers.map((d, index) => {
                         return (
@@ -166,7 +168,8 @@ const OrderInfo = (props) => {
             <table className={styles.componentInfo} style={{ width: "300px" }}>
                 <tbody>
                     <tr>
-                        <td colSpan='3'>Тестировщики<button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
+                        <td colSpan='2'>Тестировщики</td>
+                        <td><button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
                     </tr>
                     {props.order.testers.map((t, index) => {
                         return (
@@ -194,12 +197,12 @@ const OrderInfo = (props) => {
                 content={
                     <table>
                         <tbody>
-                            {props.developers.map((d, index) => {
+                            {props.developers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((d, index) => {
                                 return (
                                     <tr>
                                         <td>{index + 1})</td>
                                         <td>
-                                            <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
+                                            <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
                                         </td>
                                     </tr>
                                 )
@@ -212,15 +215,22 @@ const OrderInfo = (props) => {
             />
             <Modal
                 visible={isModalTesters}
-                title="Выберите тестировщиков, назначаемых на заказ"
+                title={<div>
+                    <p>Выберите тестировщиков, назначаемых на заказ</p>
+                    {/* <div className={styles.tools}>
+                        <input ref={searchInput} placeholder='Введите ФИО'></input>
+                        <button onClick={() => window.find(searchInput.current.value)}>поиск</button>
+                        <button onClick={() => this.rollback(searchInput.current.value = '')}>сброс</button>
+                    </div> */}
+                </div>}
                 content={
                     <table>
                         <tbody>
-                            {props.testers.map((t, index) => {
+                            {props.testers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((t, index) => {
                                 return (
                                     <tr>
                                         <td>{index + 1})</td>
-                                        <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = 'green'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
+                                        <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = '#6FE66F'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
                                     </tr>
                                 )
                             })}
