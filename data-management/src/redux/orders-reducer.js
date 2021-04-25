@@ -72,4 +72,18 @@ export const deleteOrder = (pn) => (dispatch) => {
         })
 }
 
+export const appointDeveloper = (schema) => (dispatch) => {
+    ordersAPI.appointDeveloper(schema)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
+export const removeDeveloperFromOrder = (schema) => (dispatch) => {
+    ordersAPI.removeDeveloperFromOrder(schema)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
 export default ordersReducer

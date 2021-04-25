@@ -2,7 +2,7 @@ import styles from './OrderInfo.module.css';
 import modal from './Modal.module.css';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { deleteOrder, updateOrder } from '../../../redux/orders-reducer'
+import { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder } from '../../../redux/orders-reducer'
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { UpdateOrderForm } from '../../Forms/Orders/Orders';
@@ -29,10 +29,30 @@ const OrderInfo = (props) => {
     const onClose = () => {
         setModal(false)
         setSelectedDevs([])
+        setSelectedColor(array)
     }
 
     const deleteOrder = () => {
         props.deleteOrder(props.order.id)
+    }
+
+    const appointDeveloper = () => {
+        let schema = {
+            orderId: props.order.id,
+            designatedDevelopers: selectedDevs
+        }
+        props.appointDeveloper(schema)
+        onClose()
+    }
+
+    const removeDeveloperFromOrder = (developerId) => {
+        let schema = {
+            orderId: props.order.id,
+            developerId
+        }
+        console.log(schema)
+        props.removeDeveloperFromOrder(schema)
+        setModal(false)
     }
 
     return (
@@ -91,9 +111,10 @@ const OrderInfo = (props) => {
                                 <td>
                                     <NavLink key={d.id} className={styles.link} to={`/developers/${d.id}`}>
                                         <div className={styles.item} >
-                                            {d.name}<button onClick={() => alert('удалить')}>❌</button>
+                                            {d.name}
                                         </div>
                                     </NavLink>
+                                    <button onClick={() => removeDeveloperFromOrder(d.id)}>❌</button>
                                 </td>
                             </tr>
                         )
@@ -112,9 +133,10 @@ const OrderInfo = (props) => {
                                 <td>
                                     <NavLink key={t.id} className={styles.link} to={`/testers/${t.id}`}>
                                         <div className={styles.item} >
-                                            {t.name}<button onClick={() => alert('удалить')}>❌</button>
+                                            {t.name}
                                         </div>
                                     </NavLink>
+                                    <button onClick={() => alert('удалить')}>❌</button>
                                 </td>
                             </tr>
                         )
@@ -125,12 +147,21 @@ const OrderInfo = (props) => {
             <Modal
                 visible={isModal}
                 title="Выберите разработчиков, назначаемых на заказ"
-                content={props.developers.map((d, index) => {
-                    return (
-                        <p style={{ backgroundColor: selectedColor[index].value }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
-                    )
-                })}
-                footer={<div><button onClick={onClose}>Назначить</button><button onClick={onClose}>Закрыть</button><button onClick={() => alert(selectedDevs)}>check</button></div>}
+                content={
+                    <table>
+                        <tbody>
+                            {props.developers.map((d, index) => {
+                                return (
+                                    <tr>
+                                        <td>{index + 1})</td>
+                                        <td><p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p></td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                }
+                footer={<div><button onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
                 onClose={onClose}
             />
         </div>
@@ -164,4 +195,4 @@ const Modal = ({
     </div>
 }
 
-export default connect(null, { deleteOrder, updateOrder })(OrderInfo);
+export default connect(null, { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder })(OrderInfo);

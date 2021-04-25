@@ -7,6 +7,7 @@ import { getDevelopers } from '../../redux/developers-reducer'
 import { getTesters } from '../../redux/testers-reducer'
 import Panel from '../Panel/Panel';
 import Customers from './Customers';
+import load from '../../static/images/load.gif'
 const CUSTOMERS = 'CUSTOMERS'
 
 class CustomersContainer extends React.Component {
@@ -21,8 +22,7 @@ class CustomersContainer extends React.Component {
         return (
             <div>
                 <Panel target={CUSTOMERS} />
-                {this.props.customers.length === 0 ? <>null</> : <Customers customers={this.props.customers} />}
-
+                {this.props.customers.length === 0 ? <img src={load} alt="loading..." /> : <Customers customers={this.props.customers} />}
             </div>
         )
     }
