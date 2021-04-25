@@ -1,4 +1,5 @@
 import { ordersAPI } from '../api/api'
+import { getCustomers } from './customers-reducer'
 
 const SET_ORDERS = 'SET_ORDERS'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
@@ -51,6 +52,7 @@ export const getOrders = () => (dispatch) => {
 export const createNewOrder = (order) => (dispatch) => {
     ordersAPI.createNewOrder(order)
         .then(response => {
+            dispatch(getCustomers())
             dispatch(getOrders())
         })
 }

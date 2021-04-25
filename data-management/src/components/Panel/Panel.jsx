@@ -4,7 +4,6 @@ import { createNewDeveloper } from '../../redux/developers-reducer'
 import { createNewCustomer } from '../../redux/customers-reducer'
 import { createNewOrder } from '../../redux/orders-reducer'
 import { CreateCustomerForm } from '../Forms/Customers/Customers';
-import { CreateOrderForm } from '../Forms/Orders/Orders';
 import { CreateDeveloperForm } from '../Forms/Developers/Developers'
 import { connect } from 'react-redux';
 import styles from './Panel.module.css'
@@ -42,10 +41,7 @@ class Panel extends React.Component {
     this.props.createNewCustomer(customer)
   }
 
-  addNewOrder = (order) => {
-    this.props.createNewOrder(order)
-  }
-
+  
   render() {
     let name = '';
     if ((this.props.target === 'TESTERS') || (this.props.target === 'DEVELOPERS')) {
@@ -66,7 +62,6 @@ class Panel extends React.Component {
             {this.props.target === 'TESTERS' ? <CreateTesterForm onSubmit={this.addNewTester} /> : null}
             {this.props.target === 'DEVELOPERS' ? <CreateDeveloperForm onSubmit={this.addNewDeveloper} /> : null}
             {this.props.target === 'CUSTOMERS' ? <CreateCustomerForm onSubmit={this.addNewCustomer} /> : null}
-            {this.props.target === 'ORDERS' ? <CreateOrderForm onSubmit={this.addNewOrder} /> : null}
           </div>
         </div>
       </div>

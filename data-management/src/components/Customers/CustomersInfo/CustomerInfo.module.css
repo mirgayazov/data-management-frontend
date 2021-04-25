@@ -27,3 +27,11 @@ textarea {
 .componentInfo2 {
   border-spacing: 7px 0px;
 }
+
+
+.link {
+  text-decoration: none;
+  font-weight: 700;
+  display: inline-block;
+  color: black;
+}
