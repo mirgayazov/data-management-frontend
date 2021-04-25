@@ -1,4 +1,5 @@
 import styles from './OrderInfo.module.css';
+import modal from './Modal.module.css';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { deleteOrder, updateOrder } from '../../../redux/orders-reducer'
@@ -7,10 +8,27 @@ import { NavLink } from 'react-router-dom';
 import { UpdateOrderForm } from '../../Forms/Orders/Orders';
 
 const OrderInfo = (props) => {
+    const array = []
+    for (let i = 0; i < props.developers.length; i++) {
+        let color = {
+            id: props.developers[i].personnel_number,
+            value: ''
+        }
+        array.push(color)
+    }
+    debugger
     const [editMode, setEditMode] = useState(false);
+    const [isModal, setModal] = React.useState(false);
+    const [selectedColor, setSelectedColor] = React.useState(array);
+    const [selectedDevs, setSelectedDevs] = React.useState([])
 
     const updateOrder = (order) => {
         props.updateOrder(order)
+    }
+
+    const onClose = () => {
+        setModal(false)
+        setSelectedDevs([])
     }
 
     const deleteOrder = () => {
@@ -61,8 +79,89 @@ const OrderInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
+            <table className={styles.componentInfo} style={{ width: "300px" }}>
+                <tbody>
+                    <tr>
+                        <td colSpan='2'>Программисты<button onClick={() => setModal(!isModal)}>➕</button></td>
+                    </tr>
+                    {props.order.developers.map((d, index) => {
+                        return (
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td>
+                                    <NavLink key={d.id} className={styles.link} to={`/developers/${d.id}`}>
+                                        <div className={styles.item} >
+                                            {d.name}<button onClick={() => alert('удалить')}>❌</button>
+                                        </div>
+                                    </NavLink>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <table className={styles.componentInfo} style={{ width: "300px" }}>
+                <tbody>
+                    <tr>
+                        <td colSpan='2'>Тестировщики<button onClick={() => alert('добавить')}>➕</button></td>
+                    </tr>
+                    {props.order.testers.map((t, index) => {
+                        return (
+                            <tr>
+                                <td>{index + 1}</td>
+                                <td>
+                                    <NavLink key={t.id} className={styles.link} to={`/testers/${t.id}`}>
+                                        <div className={styles.item} >
+                                            {t.name}<button onClick={() => alert('удалить')}>❌</button>
+                                        </div>
+                                    </NavLink>
+                                </td>
+                            </tr>
+                        )
+                    })}
+                </tbody>
+            </table>
+            <button onClick={() => alert(selectedDevs)}>check</button>
+            <Modal
+                visible={isModal}
+                title="Выберите разработчиков, назначаемых на заказ"
+                content={props.developers.map((d, index) => {
+                    return (
+                        <p style={{ backgroundColor: selectedColor[index].value }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
+                    )
+                })}
+                footer={<div><button onClick={onClose}>Назначить</button><button onClick={onClose}>Закрыть</button><button onClick={() => alert(selectedDevs)}>check</button></div>}
+                onClose={onClose}
+            />
         </div>
     )
+}
+
+const Modal = ({
+    visible = false,
+    title = '',
+    content = '',
+    footer = '',
+    onClose, }) => {
+
+    // если компонент невидим, то не отображаем его
+    if (!visible) return null;
+
+    // или возвращаем верстку модального окна
+    return <div className={modal.modal} onClick={onClose}>
+        <div className={modal.modalDialog} onClick={e => e.stopPropagation()}>
+            <div className={modal.modalHeader}>
+                <h3 className={modal.modalTitle}>{title}</h3>
+                <span className={modal.modalClose} onClick={onClose}>
+                    &times;
+            </span>
+            </div>
+            <div className={modal.modalBody}>
+                <div className={modal.modalContent}>{content}</div>
+            </div>
+            {footer && <div className={modal.modalFooter}>{footer}</div>}
+        </div>
+    </div>
 }
 
 export default connect(null, { deleteOrder, updateOrder })(OrderInfo);
