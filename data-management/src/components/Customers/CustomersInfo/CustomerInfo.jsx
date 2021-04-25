@@ -80,7 +80,7 @@ let CustomerInfo = (props) => {
                     </tr>
                     {props.customer.orders.map((o, index) => {
                         return (
-                            <tr>
+                            <tr key={o.id}>
                                 <td>{index + 1}</td>
                                 <td>
                                     <NavLink key={o.id} className={styles.link} to={`/orders/${o.id}`}>

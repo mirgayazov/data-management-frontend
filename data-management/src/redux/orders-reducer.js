@@ -79,11 +79,26 @@ export const appointDeveloper = (schema) => (dispatch) => {
         })
 }
 
+export const appointTester = (schema) => (dispatch) => {
+    ordersAPI.appointTester(schema)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
 export const removeDeveloperFromOrder = (schema) => (dispatch) => {
     ordersAPI.removeDeveloperFromOrder(schema)
         .then(response => {
             dispatch(getOrders())
         })
 }
+
+export const removeTesterFromOrder = (schema) => (dispatch) => {
+    ordersAPI.removeTesterFromOrder(schema)
+        .then(response => {
+            dispatch(getOrders())
+        })
+}
+
 
 export default ordersReducer

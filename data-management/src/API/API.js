@@ -15,7 +15,9 @@ export const ordersAPI = {
     getOrders: () => server.get('orders').then(response => response.data.orders),
     createNewOrder(order) { return server.post('orders', { order }) },
     appointDeveloper(schema) { return server.post('orders/appoint-developer', { schema }) },
+    appointTester(schema) { return server.post('orders/appoint-tester', { schema }) },
     removeDeveloperFromOrder(schema) { return server.post('orders/remove-developer-from-order', { schema }) },
+    removeTesterFromOrder(schema) { return server.post('orders/remove-tester-from-order', { schema }) },
     updateOrder(order) { return server.put('orders', { order }) },
     deleteOrder(id) { return server.delete('orders', { data: { id } }) },
 }

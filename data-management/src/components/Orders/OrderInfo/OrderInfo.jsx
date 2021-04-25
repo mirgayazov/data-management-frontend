@@ -2,7 +2,7 @@ import styles from './OrderInfo.module.css';
 import modal from './Modal.module.css';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder } from '../../../redux/orders-reducer'
+import { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder, appointTester, removeTesterFromOrder } from '../../../redux/orders-reducer'
 import { Redirect } from 'react-router';
 import { NavLink } from 'react-router-dom';
 import { UpdateOrderForm } from '../../Forms/Orders/Orders';
@@ -16,11 +16,26 @@ const OrderInfo = (props) => {
         }
         array.push(color)
     }
-    debugger
+
+    const arrayTesters = []
+    for (let i = 0; i < props.testers.length; i++) {
+        let color = {
+            id: props.testers[i].personnel_number,
+            value: ''
+        }
+        arrayTesters.push(color)
+    }
+
     const [editMode, setEditMode] = useState(false);
+
     const [isModal, setModal] = React.useState(false);
     const [selectedColor, setSelectedColor] = React.useState(array);
-    const [selectedDevs, setSelectedDevs] = React.useState([])
+    const [selectedDevs, setSelectedDevs] = React.useState([]);
+
+    const [isModalTesters, setModalTesters] = React.useState(false);
+    const [selectedColorTesters, setSelectedColorTesters] = React.useState(arrayTesters);
+    const [selectedTesters, setSelectedTesters] = React.useState([]);
+
 
     const updateOrder = (order) => {
         props.updateOrder(order)
@@ -30,6 +45,12 @@ const OrderInfo = (props) => {
         setModal(false)
         setSelectedDevs([])
         setSelectedColor(array)
+    }
+
+    const onCloseTesters = () => {
+        setModalTesters(false)
+        setSelectedTesters([])
+        setSelectedColorTesters(arrayTesters)
     }
 
     const deleteOrder = () => {
@@ -50,9 +71,26 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             developerId
         }
-        console.log(schema)
         props.removeDeveloperFromOrder(schema)
         setModal(false)
+    }
+
+    const appointTester = () => {
+        let schema = {
+            orderId: props.order.id,
+            designatedTesters: selectedTesters
+        }
+        props.appointTester(schema)
+        onCloseTesters()
+    }
+
+    const removeTesterFromOrder = (testerId) => {
+        let schema = {
+            orderId: props.order.id,
+            testerId
+        }
+        props.removeTesterFromOrder(schema)
+        setModalTesters(false)
     }
 
     return (
@@ -79,7 +117,7 @@ const OrderInfo = (props) => {
                                     <td>Цена</td><td>{props.order.cost}₽</td>
                                 </tr>
                                 <tr>
-                                    <td>Техническое задание</td><td><textarea value={props.order.technical_task} /></td>
+                                    <td>Техническое задание</td><td><textarea readOnly value={props.order.technical_task} /></td>
                                 </tr>
                                 <tr>
                                     <td>Отзыв клиента</td><td>{props.order.customer_feedback}</td>
@@ -124,11 +162,11 @@ const OrderInfo = (props) => {
             <table className={styles.componentInfo} style={{ width: "300px" }}>
                 <tbody>
                     <tr>
-                        <td colSpan='2'>Тестировщики<button onClick={() => alert('добавить')}>➕</button></td>
+                        <td colSpan='2'>Тестировщики<button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
                     </tr>
                     {props.order.testers.map((t, index) => {
                         return (
-                            <tr>
+                            <tr key={t.id}>
                                 <td>{index + 1}</td>
                                 <td>
                                     <NavLink key={t.id} className={styles.link} to={`/testers/${t.id}`}>
@@ -136,7 +174,7 @@ const OrderInfo = (props) => {
                                             {t.name}
                                         </div>
                                     </NavLink>
-                                    <button onClick={() => alert('удалить')}>❌</button>
+                                    <button onClick={() => removeTesterFromOrder(t.id)}>❌</button>
                                 </td>
                             </tr>
                         )
@@ -154,7 +192,9 @@ const OrderInfo = (props) => {
                                 return (
                                     <tr>
                                         <td>{index + 1})</td>
-                                        <td><p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p></td>
+                                        <td>
+                                            <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = 'green'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
+                                        </td>
                                     </tr>
                                 )
                             })}
@@ -163,6 +203,26 @@ const OrderInfo = (props) => {
                 }
                 footer={<div><button onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
                 onClose={onClose}
+            />
+            <Modal
+                visible={isModalTesters}
+                title="Выберите тестировщиков, назначаемых на заказ"
+                content={
+                    <table>
+                        <tbody>
+                            {props.testers.map((t, index) => {
+                                return (
+                                    <tr>
+                                        <td>{index + 1})</td>
+                                        <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = 'green'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                }
+                footer={<div><button onClick={appointTester}>Назначить</button><button onClick={onCloseTesters}>Закрыть</button></div>}
+                onClose={onCloseTesters}
             />
         </div>
     )
@@ -195,4 +255,4 @@ const Modal = ({
     </div>
 }
 
-export default connect(null, { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder })(OrderInfo);
+export default connect(null, { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder, appointTester, removeTesterFromOrder })(OrderInfo);

@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 class OrderInfoContainer extends React.Component {
     render() {
         return (
-            <OrderInfo developers={this.props.developers} order={this.props.orders.filter(order => order.id === this.props.match.params.id)[0]} />
+            <OrderInfo testers={this.props.testers} developers={this.props.developers} order={this.props.orders.filter(order => order.id === this.props.match.params.id)[0]} />
         )
     }
 }
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => {
     return {
         orders: state.ordersPage.orders,
         developers: state.developersPage.developers,
+        testers: state.testersPage.testers,
     }
 }
 
