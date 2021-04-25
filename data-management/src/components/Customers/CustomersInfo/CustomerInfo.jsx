@@ -33,6 +33,7 @@ let CustomerInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
+            <hr className={styles.item}/>
             {editMode ? <UpdateCustomerForm onSubmit={updateСustomer} customer={props.customer} setEditMode={setEditMode} /> : props.customer ?
                 <div>
                     <table className={styles.componentInfo}>
@@ -73,6 +74,7 @@ let CustomerInfo = (props) => {
             <div>
                 {newOrder ? <CreateOrderForm onSubmit={addNewOrder} setNewOrder={setNewOrder} customerId={props.customer.id} /> : null}
             </div>
+            <hr className={styles.item}/>
             <table className={styles.componentInfo}>
                 <tbody>
                     <tr>
@@ -84,7 +86,7 @@ let CustomerInfo = (props) => {
                                 <td>{index + 1}</td>
                                 <td>
                                     <NavLink key={o.id} className={styles.link} to={`/orders/${o.id}`}>
-                                        <div className={styles.item} >
+                                        <div  >
                                             {o.name}
                                         </div>
                                     </NavLink>

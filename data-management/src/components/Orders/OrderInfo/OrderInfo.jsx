@@ -102,6 +102,7 @@ const OrderInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
+            <hr className={styles.itemHr}/>
             {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
                 props.order ?
                     <div>
@@ -137,10 +138,11 @@ const OrderInfo = (props) => {
                     </tr>
                 </tbody>
             </table>
+            <hr className={styles.itemHr}/>
             <table className={styles.componentInfo} style={{ width: "300px" }}>
                 <tbody>
                     <tr>
-                        <td colSpan='2'>Программисты<button onClick={() => setModal(!isModal)}>➕</button></td>
+                        <td colSpan='3'>Программисты<button onClick={() => setModal(!isModal)}>➕</button></td>
                     </tr>
                     {props.order.developers.map((d, index) => {
                         return (
@@ -152,6 +154,8 @@ const OrderInfo = (props) => {
                                             {d.name}
                                         </div>
                                     </NavLink>
+                                </td>
+                                <td>
                                     <button onClick={() => removeDeveloperFromOrder(d.id)}>❌</button>
                                 </td>
                             </tr>
@@ -162,7 +166,7 @@ const OrderInfo = (props) => {
             <table className={styles.componentInfo} style={{ width: "300px" }}>
                 <tbody>
                     <tr>
-                        <td colSpan='2'>Тестировщики<button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
+                        <td colSpan='3'>Тестировщики<button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
                     </tr>
                     {props.order.testers.map((t, index) => {
                         return (
@@ -174,6 +178,9 @@ const OrderInfo = (props) => {
                                             {t.name}
                                         </div>
                                     </NavLink>
+
+                                </td>
+                                <td>
                                     <button onClick={() => removeTesterFromOrder(t.id)}>❌</button>
                                 </td>
                             </tr>
@@ -181,7 +188,6 @@ const OrderInfo = (props) => {
                     })}
                 </tbody>
             </table>
-            <button onClick={() => alert(selectedDevs)}>check</button>
             <Modal
                 visible={isModal}
                 title="Выберите разработчиков, назначаемых на заказ"
@@ -201,7 +207,7 @@ const OrderInfo = (props) => {
                         </tbody>
                     </table>
                 }
-                footer={<div><button onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
+                footer={<div><button style={{ margin: '5px' }} onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
                 onClose={onClose}
             />
             <Modal
@@ -221,7 +227,7 @@ const OrderInfo = (props) => {
                         </tbody>
                     </table>
                 }
-                footer={<div><button onClick={appointTester}>Назначить</button><button onClick={onCloseTesters}>Закрыть</button></div>}
+                footer={<div><button style={{ margin: '5px' }} onClick={appointTester}>Назначить</button><button onClick={onCloseTesters}>Закрыть</button></div>}
                 onClose={onCloseTesters}
             />
         </div>
