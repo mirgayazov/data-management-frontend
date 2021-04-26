@@ -7,6 +7,7 @@ let initialState = {
     email: null,
     isAuth: false,
     count: 0,
+    name: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -21,36 +22,26 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, email, isAuth, count) => {
+export const setAuthUserData = (userId, email, isAuth, count, name) => {
     return {
         type: SET_USER_DATA,
-        payload: { userId, email, isAuth, count },
+        payload: { userId, email, isAuth, count, name },
     }
 }
-
-// export const getAuthUserData = () => (dispatch) => {
-//     authAPI.me()
-//         .then(response => {
-//             if (response.data.resultCode === 0) {
-//                 let { id, email, } = response.data.data;
-//                 dispatch(setAuthUserData(id, email, true));
-//             }
-//         })
-// }
 
 export const login = (email, password) => (dispatch) => {
     authAPI.login(email, password)
         .then(response => {
             if (response.data.schema.resultCode === 0) {
-                dispatch(setAuthUserData(response.data.schema.id, email, true, 0))
+                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name))
             } else {
-                dispatch(setAuthUserData(null, null, false, 1))
+                dispatch(setAuthUserData(null, null, false, 1, null))
             }
         })
 }
 
 export const logout = () => (dispatch) => {
-    dispatch(setAuthUserData(null, null, false, 0))
+    dispatch(setAuthUserData(null, null, false, 0, null))
 }
 
 export default authReducer

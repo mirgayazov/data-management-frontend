@@ -1,17 +1,25 @@
 import classes from './Header.module.css'
 import { logout } from '../../../redux/auth-reducer'
 import { connect } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 const Header = (props) => {
   const logout = () => {
-    props.logout(props.setIsAuth)
+    props.logout()
   }
 
   return (
     <header className={classes.header}>
-      <button onClick={logout}>Выйти из системы</button>
+      Здравствуйте {props.name.full_name}!
+      <NavLink onClick={logout} to='/' className={classes.link} >Выйти из системы</NavLink>
     </header>
   );
 };
 
-export default connect(null, { logout })(Header);
+const mapStateToProps = (state) => {
+  return {
+    name: state.auth.name,
+  }
+}
+
+export default connect(mapStateToProps, { logout })(Header);
