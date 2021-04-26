@@ -3,11 +3,12 @@ import modal from './Modal.module.css';
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder, appointTester, removeTesterFromOrder } from '../../../redux/orders-reducer'
-import { Redirect } from 'react-router';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { UpdateOrderForm } from '../../Forms/Orders/Orders';
 
 const OrderInfo = (props) => {
+    const history = useHistory();
+
     const array = []
     for (let i = 0; i < props.developers.length; i++) {
         let color = {
@@ -55,7 +56,12 @@ const OrderInfo = (props) => {
     }
 
     const deleteOrder = () => {
+        history.goBack()
         props.deleteOrder(props.order.id)
+    }
+
+    const goBack = () => {
+        history.goBack();
     }
 
     const appointDeveloper = () => {
@@ -96,150 +102,149 @@ const OrderInfo = (props) => {
 
     return (
         <div className={styles.component}>
-            <table className={styles.componentInfo2}>
-                <tbody>
-                    <tr>
-                        <td> <NavLink key={'back'} className={styles.link} to={`/orders`} title='назад'>⇦</NavLink></td>
-                    </tr>
-                </tbody>
-            </table>
-            <hr className={styles.itemHr} />
-            {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
-                props.order ?
-                    <div>
-                        <table className={styles.componentInfo}>
+            { props.order ? <div>
+                <table className={styles.componentInfo2}>
+                    <tbody>
+                        <tr>
+                            <td><button key={'back'} onClick={goBack}>⇦</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr className={styles.itemHr} />
+                {editMode ? <UpdateOrderForm onSubmit={updateOrder} order={props.order} setEditMode={setEditMode} /> :
+                        <div>
+                            <table className={styles.componentInfo}>
+                                <tbody>
+                                    <tr>
+                                        <td>Название</td><td>{props.order.name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Номер заказчика</td><td>{props.order.customer_id}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Цена</td><td>{props.order.cost}₽</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Техническое задание</td><td><textarea readOnly value={props.order.technical_task} /></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Отзыв клиента</td><td>{props.order.customer_feedback}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Тип заказа</td><td>{props.order.order_type}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                }
+                <table className={styles.componentInfo2}>
+                    <tbody>
+                        <tr>
+                            <td><button onClick={() => deleteOrder()}>Удалить</button></td>
+                            <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr className={styles.itemHr} />
+                <table className={styles.componentInfo} style={{ width: "300px" }}>
+                    <tbody>
+                        <tr>
+                            <td colSpan='2'>Программисты</td>
+                            <td><button onClick={() => setModal(!isModal)}>➕</button></td>
+                        </tr>
+                        {props.order.developers.map((d, index) => {
+                            return (
+                                <tr>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <NavLink key={d.id} className={styles.link} to={`/developers/${d.id}`}>
+                                            <div className={styles.item} >
+                                                {d.name}
+                                            </div>
+                                        </NavLink>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => removeDeveloperFromOrder(d.id)}>❌</button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                <table className={styles.componentInfo} style={{ width: "300px" }}>
+                    <tbody>
+                        <tr>
+                            <td colSpan='2'>Тестировщики</td>
+                            <td><button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
+                        </tr>
+                        {props.order.testers.map((t, index) => {
+                            return (
+                                <tr key={t.id}>
+                                    <td>{index + 1}</td>
+                                    <td>
+                                        <NavLink key={t.id} className={styles.link} to={`/testers/${t.id}`}>
+                                            <div className={styles.item} >
+                                                {t.name}
+                                            </div>
+                                        </NavLink>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => removeTesterFromOrder(t.id)}>❌</button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+                <Modal
+                    visible={isModal}
+                    title="Выберите разработчиков, назначаемых на заказ"
+                    content={
+                        <table>
                             <tbody>
-                                <tr>
-                                    <td>Название</td><td>{props.order.name}</td>
-                                </tr>
-                                <tr>
-                                    <td>Номер заказчика</td><td>{props.order.customer_id}</td>
-                                </tr>
-                                <tr>
-                                    <td>Цена</td><td>{props.order.cost}₽</td>
-                                </tr>
-                                <tr>
-                                    <td>Техническое задание</td><td><textarea readOnly value={props.order.technical_task} /></td>
-                                </tr>
-                                <tr>
-                                    <td>Отзыв клиента</td><td>{props.order.customer_feedback}</td>
-                                </tr>
-                                <tr>
-                                    <td>Тип заказа</td><td>{props.order.order_type}</td>
-                                </tr>
+                                {props.developers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((d, index) => {
+                                    return (
+                                        <tr>
+                                            <td>{index + 1})</td>
+                                            <td>
+                                                <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                             </tbody>
                         </table>
-                    </div> : <Redirect to='/orders' />
-            }
-            <table className={styles.componentInfo2}>
-                <tbody>
-                    <tr>
-                        <td><button onClick={() => deleteOrder()}>Удалить</button></td>
-                        <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <hr className={styles.itemHr} />
-            <table className={styles.componentInfo} style={{ width: "300px" }}>
-                <tbody>
-                    <tr>
-                        <td colSpan='2'>Программисты</td>
-                        <td><button onClick={() => setModal(!isModal)}>➕</button></td>
-                    </tr>
-                    {props.order.developers.map((d, index) => {
-                        return (
-                            <tr>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <NavLink key={d.id} className={styles.link} to={`/developers/${d.id}`}>
-                                        <div className={styles.item} >
-                                            {d.name}
-                                        </div>
-                                    </NavLink>
-                                </td>
-                                <td>
-                                    <button onClick={() => removeDeveloperFromOrder(d.id)}>❌</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <table className={styles.componentInfo} style={{ width: "300px" }}>
-                <tbody>
-                    <tr>
-                        <td colSpan='2'>Тестировщики</td>
-                        <td><button onClick={() => setModalTesters(!isModalTesters)}>➕</button></td>
-                    </tr>
-                    {props.order.testers.map((t, index) => {
-                        return (
-                            <tr key={t.id}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <NavLink key={t.id} className={styles.link} to={`/testers/${t.id}`}>
-                                        <div className={styles.item} >
-                                            {t.name}
-                                        </div>
-                                    </NavLink>
-
-                                </td>
-                                <td>
-                                    <button onClick={() => removeTesterFromOrder(t.id)}>❌</button>
-                                </td>
-                            </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
-            <Modal
-                visible={isModal}
-                title="Выберите разработчиков, назначаемых на заказ"
-                content={
-                    <table>
-                        <tbody>
-                            {props.developers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((d, index) => {
-                                return (
-                                    <tr>
-                                        <td>{index + 1})</td>
-                                        <td>
-                                            <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                }
-                footer={<div><button style={{ margin: '5px' }} onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
-                onClose={onClose}
-            />
-            <Modal
-                visible={isModalTesters}
-                title={<div>
-                    <p>Выберите тестировщиков, назначаемых на заказ</p>
-                    {/* <div className={styles.tools}>
+                    }
+                    footer={<div><button style={{ margin: '5px' }} onClick={appointDeveloper}>Назначить</button><button onClick={onClose}>Закрыть</button></div>}
+                    onClose={onClose}
+                />
+                <Modal
+                    visible={isModalTesters}
+                    title={<div>
+                        <p>Выберите тестировщиков, назначаемых на заказ</p>
+                        {/* <div className={styles.tools}>
                         <input ref={searchInput} placeholder='Введите ФИО'></input>
                         <button onClick={() => window.find(searchInput.current.value)}>поиск</button>
                         <button onClick={() => this.rollback(searchInput.current.value = '')}>сброс</button>
                     </div> */}
-                </div>}
-                content={
-                    <table>
-                        <tbody>
-                            {props.testers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((t, index) => {
-                                return (
-                                    <tr>
-                                        <td>{index + 1})</td>
-                                        <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = '#6FE66F'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                }
-                footer={<div><button style={{ margin: '5px' }} onClick={appointTester}>Назначить</button><button onClick={onCloseTesters}>Закрыть</button></div>}
-                onClose={onCloseTesters}
-            />
+                    </div>}
+                    content={
+                        <table>
+                            <tbody>
+                                {props.testers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((t, index) => {
+                                    return (
+                                        <tr>
+                                            <td>{index + 1})</td>
+                                            <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = '#6FE66F'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
+                                        </tr>
+                                    )
+                                })}
+                            </tbody>
+                        </table>
+                    }
+                    footer={<div><button style={{ margin: '5px' }} onClick={appointTester}>Назначить</button><button onClick={onCloseTesters}>Закрыть</button></div>}
+                    onClose={onCloseTesters}
+                /></div> : <></>}
         </div>
     )
 }

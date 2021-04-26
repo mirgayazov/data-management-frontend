@@ -7,7 +7,7 @@ export const CreateOrderForm = (props) => {
       initialValues={{ name: '', cost: '', customerFeedback: '', technicalTask: '', orderType: '' }}
       onSubmit={(order, { setSubmitting }) => {
         order.customerId = props.customerId
-        props.onSubmit(order)
+        props.onSubmit(order);
         setSubmitting(false);
         props.setNewOrder(false)
       }}
@@ -71,7 +71,7 @@ export const UpdateOrderForm = (props) => {
                   <ErrorMessage name='name' component='div' /></td>
               </tr>
               <tr>
-                <td>Номер заказчика</td><td><Field className={styles.item} type='text' name='customerId' />
+                <td>Номер заказчика</td><td><Field style={{cursor:"not-allowed"}} className={styles.item} type='text' name='customerId' readOnly/>
                   <ErrorMessage name='customerId' component='div' /></td>
               </tr>
               <tr>

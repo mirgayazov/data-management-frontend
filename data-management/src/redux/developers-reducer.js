@@ -1,4 +1,5 @@
 import { developersAPI } from '../api/api'
+import { getOrders } from './orders-reducer'
 
 const SET_DEVELOPERS = 'SET_DEVELOPERS'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
@@ -59,6 +60,7 @@ export const deleteDeveloper = (pn) => (dispatch) => {
     developersAPI.deleteDeveloper(pn)
         .then(response => {
             dispatch(getDevelopers())
+            dispatch(getOrders())
         })
 }
 

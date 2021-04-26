@@ -5,9 +5,10 @@ export const CreateCustomerForm = (props) => {
   return (
     <Formik
       initialValues={{ fullName: '', passportSeries: '', passportNumber: '', telephoneNumber: '', address: '', email: '', remarksToCustomer: '', }}
-      onSubmit={(customer, { setSubmitting }) => {
+      onSubmit={(customer, { setSubmitting, resetForm }) => {
         props.onSubmit(customer)
         setSubmitting(false);
+        resetForm();
       }}
     >
       {({ isSubmitting }) => (

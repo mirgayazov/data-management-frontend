@@ -26,76 +26,81 @@ let CustomerInfo = (props) => {
 
     return (
         <div className={styles.component}>
-            <table className={styles.componentInfo2}>
-                <tbody>
-                    <tr>
-                        <td> <NavLink key={'back'} className={styles.link} to={`/customers`} title='назад'>⇦</NavLink></td>
-                    </tr>
-                </tbody>
-            </table>
-            <hr className={styles.item}/>
-            {editMode ? <UpdateCustomerForm onSubmit={updateСustomer} customer={props.customer} setEditMode={setEditMode} /> : props.customer ?
+            {props.customer ?
                 <div>
-                    <table className={styles.componentInfo}>
+                    <table className={styles.componentInfo2}>
                         <tbody>
                             <tr>
-                                <td>ФИО</td><td>{props.customer.full_name}</td>
-                            </tr>
-                            <tr>
-                                <td>Адрес</td><td>{props.customer.address}</td>
-                            </tr>
-                            <tr>
-                                <td>Электронная почта</td><td>{props.customer.email}</td>
-                            </tr>
-                            <tr>
-                                <td>Серия паспорта</td><td>{props.customer.passport_details.series}</td>
-                            </tr>
-                            <tr>
-                                <td>Номер паспорта</td><td>{props.customer.passport_details.number}</td>
-                            </tr>
-                            <tr>
-                                <td>Контакты</td><td>{props.customer.telephone_number}</td>
-                            </tr>
-                            <tr>
-                                <td>Примечания</td><td>{props.customer.remarks_to_customer}</td>
+                                <td> <NavLink key={'back'} className={styles.link} to={`/customers`} title='назад'>⇦</NavLink></td>
                             </tr>
                         </tbody>
                     </table>
-                </div> : <Redirect to='/customers' />}
-            <table className={styles.componentInfo2}>
-                <tbody>
-                    <tr>
-                        <td><button onClick={deleteCustomer}>Удалить</button></td>
-                        <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
-                        <td><button onClick={() => setNewOrder(!newOrder)}>{newOrder ? 'Отмена' : 'Новый заказ'}</button></td>
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                {newOrder ? <CreateOrderForm onSubmit={addNewOrder} setNewOrder={setNewOrder} customerId={props.customer.id} /> : null}
-            </div>
-            <hr className={styles.item}/>
-            <table className={styles.componentInfo}>
-                <tbody>
-                    <tr>
-                        <td colSpan='2'>Заказы</td>
-                    </tr>
-                    {props.customer.orders.map((o, index) => {
-                        return (
-                            <tr key={o.id}>
-                                <td>{index + 1}</td>
-                                <td>
-                                    <NavLink key={o.id} className={styles.link} to={`/orders/${o.id}`}>
-                                        <div  >
-                                            {o.name}
-                                        </div>
-                                    </NavLink>
-                                </td>
+                    <hr className={styles.item} />
+                    {editMode ? <UpdateCustomerForm onSubmit={updateСustomer} customer={props.customer} setEditMode={setEditMode} /> : props.customer ?
+                        <div>
+                            <table className={styles.componentInfo}>
+                                <tbody>
+                                    <tr>
+                                        <td>ФИО</td><td>{props.customer.full_name}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Адрес</td><td>{props.customer.address}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Электронная почта</td><td>{props.customer.email}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Серия паспорта</td><td>{props.customer.passport_details.series}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Номер паспорта</td><td>{props.customer.passport_details.number}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Контакты</td><td>{props.customer.telephone_number}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Примечания</td><td>{props.customer.remarks_to_customer}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div> : <Redirect to='/customers' />}
+                    <table className={styles.componentInfo2}>
+                        <tbody>
+                            <tr>
+                                <td><button onClick={deleteCustomer}>Удалить</button></td>
+                                <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
+
                             </tr>
-                        )
-                    })}
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+
+                    <hr className={styles.item} />
+                    <table className={styles.componentInfo}>
+                        <tbody>
+                            <tr>
+                                <td colSpan=''>Заказы</td>
+                                <td><button onClick={() => setNewOrder(!newOrder)}>{newOrder ? <>➖</> : <>➕</>}</button></td>
+                            </tr>
+                            {props.customer.orders.map((o, index) => {
+                                return (
+                                    <tr key={o.id}>
+                                        <td>{index + 1}</td>
+                                        <td colSpan=''>
+                                            <NavLink key={o.id} className={styles.link} to={`/orders/${o.id}`}>
+                                                <div  >
+                                                    {o.name}
+                                                </div>
+                                            </NavLink>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
+                    </table>
+                    <div>
+                        {newOrder ? <CreateOrderForm onSubmit={addNewOrder} setNewOrder={setNewOrder} customerId={props.customer.id} /> : null}
+                    </div>
+                </div> : <Redirect to='/customers' />}
         </div>
     )
 }

@@ -1,4 +1,5 @@
 import { testersAPI } from '../api/api'
+import { getOrders } from './orders-reducer'
 
 const ADD_TESTER = 'ADD_TESTER'
 const SET_TESTERS = 'SET_TESTERS'
@@ -76,6 +77,7 @@ export const deleteTester = (pn) => (dispatch) => {
     testersAPI.deleteTester(pn)
         .then(response => {
             dispatch(getTesters())
+            dispatch(getOrders())
         })
 }
 
