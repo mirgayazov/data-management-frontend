@@ -56,6 +56,9 @@ let TesterInfo = (props) => {
                                         <td>Контакты</td><td>{props.tester.telephone_number}</td>
                                     </tr>
                                     <tr>
+                                        <td>Электронная почта</td><td>{props.tester.email}</td>
+                                    </tr>
+                                    <tr>
                                         <td>Трудовой стаж</td><td>{props.tester.work_experience}</td>
                                     </tr>
                                 </tbody>

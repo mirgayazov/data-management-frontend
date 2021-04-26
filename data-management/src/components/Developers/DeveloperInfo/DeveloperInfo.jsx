@@ -52,6 +52,9 @@ let DeveloperInfo = (props) => {
                                     <td>Контакты</td><td>{props.developer.telephone_number}</td>
                                 </tr>
                                 <tr>
+                                    <td>Электронная почта</td><td>{props.developer.email}</td>
+                                </tr>
+                                <tr>
                                     <td>Трудовой стаж</td><td>{props.developer.work_experience}</td>
                                 </tr>
                             </tbody>

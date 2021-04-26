@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 export const CreateDeveloperForm = (props) => {
   return (
     <Formik
-      initialValues={{ fullName: '', position: '', passportSeries: '', passportNumber: '', salary: '', telephoneNumber: '', workExperience: '', }}
+      initialValues={{ fullName: '', position: '', passportSeries: '', passportNumber: '', salary: '', telephoneNumber: '', workExperience: '', email: ''}}
       onSubmit={(developer, { setSubmitting }) => {
         props.onSubmit(developer)
         setSubmitting(false);
@@ -40,6 +40,10 @@ export const CreateDeveloperForm = (props) => {
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
               </tr>
               <tr>
+              <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
+              </tr>
+              <tr>
                 <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />
                   <ErrorMessage name='workExperience' component='div' /></td>
               </tr>
@@ -65,7 +69,7 @@ export const CreateDeveloperForm = (props) => {
 export const UpdateDeveloperForm = (props) => {
   return (
     <Formik
-      initialValues={{ fullName: props.developer.full_name, position: props.developer.position, passportSeries: props.developer.passport_details.series, passportNumber: props.developer.passport_details.number, salary: props.developer.salary, telephoneNumber: props.developer.telephone_number, workExperience: props.developer.work_experience, }}
+      initialValues={{ fullName: props.developer.full_name, position: props.developer.position, passportSeries: props.developer.passport_details.series, passportNumber: props.developer.passport_details.number, salary: props.developer.salary, telephoneNumber: props.developer.telephone_number, workExperience: props.developer.work_experience, email: props.developer.email}}
       validate={values => {
         const errors = {};
         if (!values.telephoneNumber) {
@@ -107,6 +111,10 @@ export const UpdateDeveloperForm = (props) => {
               <tr>
                 <td>Контакты</td><td><Field className={styles.item} type='text' name='telephoneNumber' />
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
+              </tr>
+              <tr>
+              <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
               </tr>
               <tr>
                 <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />

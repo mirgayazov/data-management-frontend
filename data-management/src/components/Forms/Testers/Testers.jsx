@@ -4,7 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 export const CreateTesterForm = (props) => {
   return (
     <Formik
-      initialValues={{ fullName: '', testMethod: '', position: '', passportSeries: '', passportNumber: '', salary: '', telephoneNumber: '', workExperience: '', }}
+      initialValues={{ fullName: '', testMethod: '', position: '', passportSeries: '', passportNumber: '', salary: '', telephoneNumber: '', workExperience: '', email: '' }}
       onSubmit={(tester, { setSubmitting }) => {
         props.onSubmit(tester)
         setSubmitting(false);
@@ -43,6 +43,10 @@ export const CreateTesterForm = (props) => {
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
               </tr>
               <tr>
+                <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
+              </tr>
+              <tr>
                 <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />
                   <ErrorMessage name='workExperience' component='div' /></td>
               </tr>
@@ -68,7 +72,7 @@ export const CreateTesterForm = (props) => {
 export const UpdateTesterForm = (props) => {
   return (
     <Formik
-      initialValues={{ fullName: props.tester.full_name, testMethod: props.tester.test_method, position: props.tester.position, passportSeries: props.tester.passport_details.series, passportNumber: props.tester.passport_details.number, salary: props.tester.salary, telephoneNumber: props.tester.telephone_number, workExperience: props.tester.work_experience, }}
+      initialValues={{ fullName: props.tester.full_name, testMethod: props.tester.test_method, position: props.tester.position, passportSeries: props.tester.passport_details.series, passportNumber: props.tester.passport_details.number, salary: props.tester.salary, telephoneNumber: props.tester.telephone_number, workExperience: props.tester.work_experience, email: props.tester.email }}
       validate={values => {
         const errors = {};
         if (!values.telephoneNumber) {
@@ -114,6 +118,10 @@ export const UpdateTesterForm = (props) => {
               <tr>
                 <td>Контакты</td><td><Field className={styles.item} type='text' name='telephoneNumber' />
                   <ErrorMessage name='telephoneNumber' component='div' /></td>
+              </tr>
+              <tr>
+                <td>Электронная почта</td><td><Field className={styles.item} type='text' name='email' />
+                  <ErrorMessage name='email' component='div' /></td>
               </tr>
               <tr>
                 <td>Трудовой стаж</td><td><Field className={styles.item} type='text' name='workExperience' />
