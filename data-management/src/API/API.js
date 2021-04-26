@@ -35,3 +35,7 @@ export const customersAPI = {
     updateСustomer(customer) { return server.put('customers', { customer }) },
     deleteСustomer(id) { return server.delete('customers', { data: { id } }) },
 }
+
+export const authAPI = {
+    login(email, password) { return server.post('auth/login', { data: { email, password } }) }
+}

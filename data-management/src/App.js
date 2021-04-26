@@ -10,27 +10,37 @@ import DeveloperInfoContainer from './components/Developers/DeveloperInfo/Develo
 import CustomerInfoContainer from './components/Customers/CustomersInfo/CustomerInfoContainer';
 import Header from './components/Common/Header/Header';
 import OrderInfoContainer from './components/Orders/OrderInfo/OrderInfoContainer';
+import Login from './components/Login/Login';
+import { useState } from 'react';
 
-function App() {
+function App(props) {
+  const [isAuth, setIsAuth] = useState(props.store.getState().auth.isAuth);
+  const [count, setCount] = useState(props.store.getState().auth.count);
+
   return (
-    <div className='app-wrapper'>
-      <Header />
-      <Navbar />
-      <div className='app-wrapper-content'>
-        <Route exact path='/testers' render={() => <TestersContainer />} />
-        <Route exact path='/testers/:pn' render={() => <TesterInfoContainer />} />
+    < div className='app-wrapper' >
+      { isAuth ?
+        <>
+          <Header />
+          <Navbar />
+          <div className='app-wrapper-content'>
+            <Route exact path='/testers' render={() => <TestersContainer />} />
+            <Route exact path='/testers/:pn' render={() => <TesterInfoContainer />} />
 
-        <Route exact path='/developers' render={() => <DevelopersContainer />} />
-        <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer />} />
+            <Route exact path='/developers' render={() => <DevelopersContainer />} />
+            <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer />} />
 
-        <Route exact path='/orders' render={() => <OrdersContainer />} />
-        <Route exact path='/orders/:id' render={() => <OrderInfoContainer />} />
+            <Route exact path='/orders' render={() => <OrdersContainer />} />
+            <Route exact path='/orders/:id' render={() => <OrderInfoContainer />} />
 
-        <Route exact path='/customers' render={() => <CustomersContainer />} />
-        <Route exact path='/customers/:id' render={() => <CustomerInfoContainer />} />
-      </div>
-      {/* <Footer /> */}
-    </div>
+            <Route exact path='/customers' render={() => <CustomersContainer />} />
+            <Route exact path='/customers/:id' render={() => <CustomerInfoContainer />} />
+          </div>
+        </> :
+        <>
+          <Route exact path='/' render={() => <Login setIsAuth={setIsAuth} count={count} setCount={setCount}/>} />
+        </>}
+    </div >
   );
 }
 
