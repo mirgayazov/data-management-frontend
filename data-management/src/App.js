@@ -11,15 +11,12 @@ import CustomerInfoContainer from './components/Customers/CustomersInfo/Customer
 import Header from './components/Common/Header/Header';
 import OrderInfoContainer from './components/Orders/OrderInfo/OrderInfoContainer';
 import Login from './components/Login/Login';
-import { useState } from 'react';
+import { connect } from 'react-redux';
 
 function App(props) {
-  const [isAuth, setIsAuth] = useState(props.store.getState().auth.isAuth);
-  const [count, setCount] = useState(props.store.getState().auth.count);
-
   return (
     < div className='app-wrapper' >
-      { isAuth ?
+      { props.isAuth ?
         <>
           <Header />
           <Navbar />
@@ -38,10 +35,17 @@ function App(props) {
           </div>
         </> :
         <>
-          <Route exact path='/' render={() => <Login setIsAuth={setIsAuth} count={count} setCount={setCount}/>} />
+          <Route exact path='/' render={() => <Login count={props.count} />} />
         </>}
     </div >
   );
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+    count: state.auth.count,
+  }
+}
+
+export default connect(mapStateToProps, {})(App);

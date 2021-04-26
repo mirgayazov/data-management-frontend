@@ -4,13 +4,12 @@ import { LoginForm } from '../Forms/Login/Login';
 
 const Login = (props) => {
   const onSubmit = (authData) => {
-    props.login(authData.email, authData.password, props.setIsAuth, props.setCount)
+    props.login(authData.email, authData.password)
   }
 
   return (
     <div>
-      <LoginForm onSubmit={onSubmit} count={props.count}/>
-      {/* <LoginReduxForm onSubmit={onSubmit} /> */}
+      <LoginForm onSubmit={onSubmit} count={props.count} />
     </div>
   );
 };
