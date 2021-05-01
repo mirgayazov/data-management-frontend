@@ -1,6 +1,6 @@
 .LoginDiv {
   width: 350px;
-  height: 250px;
+  height: 300px;
   padding: 25px 35px 35px 35px;
   border-radius: 40px;
   background: #ecf0f3;
@@ -9,8 +9,29 @@
   top: 50%;
   left: 50%;
   margin-right: -50%;
-  transform: translate(-50%, -50%) ;
+  transform: translate(-50%, -50%);
   box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+}
+
+.LoginDiv2 {
+  width: 350px;
+  height: 180px;
+  padding: 25px 35px 35px 35px;
+  border-radius: 40px;
+  background: #ecf0f3;
+  /* margin: 0 auto; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 13px 13px 20px #cbced1, -13px -13px 20px #ffffff;
+}
+
+.LoginDiv2 .title{
+  margin: 10px;
+  font-size: 16px;
+  letter-spacing: 0ch;
 }
 
 .logo {
@@ -58,11 +79,11 @@
   box-shadow: inset 2px 2px 2px #cbced1, inset -2px -2px 2px #ffffff;
 }
 
-.username input{
+.username input {
   width: 320px;
 }
 
-.password input{
+.password input {
   width: 320px;
 }
 
@@ -95,10 +116,10 @@
   background: #08221c;
 } */
 
-
-link {
-  padding-top: 20px;
-  text-align: center;
+.link button {
+  background: #ecf0f3;
+  margin-left: 115px;
+  margin-top: 20px;
 }
 
 link a {
