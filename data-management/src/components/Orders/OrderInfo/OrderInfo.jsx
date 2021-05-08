@@ -7,6 +7,7 @@ import { deleteOrder, updateOrder, appointDeveloper, removeDeveloperFromOrder, a
 import { NavLink, useHistory } from 'react-router-dom';
 import { UpdateOrderForm } from '../../Forms/Orders/Orders';
 import { CreateStage } from '../../Forms/Testers/Testers';
+import { ordersAPI } from '../../../api/api';
 
 const OrderInfo = (props) => {
     const history = useHistory();
@@ -29,6 +30,7 @@ const OrderInfo = (props) => {
         arrayTesters.push(color)
     }
 
+    const [stages, setStages] = useState(props.order.stages)
     const [editMode, setEditMode] = useState(false);
     const [stageMode, setStageMode] = useState(false);
     // const searchInput = React.createRef();
@@ -41,9 +43,15 @@ const OrderInfo = (props) => {
     const [selectedColorTesters, setSelectedColorTesters] = React.useState(arrayTesters);
     const [selectedTesters, setSelectedTesters] = React.useState([]);
 
+    const resetStages = (id) => {
+        ordersAPI.getStages(id).then(data => {
+            debugger
+            setStages(data.data.stages)
+        })
+    }
+
     const sendStage = (schema) => {
-        props.saveStage(schema)
-        // console.log(schema)
+        props.saveStage(schema, resetStages)
     }
 
     const updateOrder = (order) => {
@@ -133,6 +141,31 @@ const OrderInfo = (props) => {
                                 </tr>
                             </tbody>
                         </table>
+                        <hr className={styles.itemHr} />
+                        <table className={styles.componentInfo} style={{ textAlign: 'center' }}>
+                            <tbody>
+                                <tr >
+                                    <td colSpan='5' >Журнал разработки</td>
+                                </tr>
+                                <tr >
+                                    <td rowSpan='2'>№</td>
+                                    <td rowSpan='2'>Ответсвенный за этап</td>
+                                    <td rowSpan='2'>Комментарий</td>
+                                    <td colSpan='2' >Этап</td>
+                                </tr>
+                                <tr>
+                                    <td>открыт</td>
+                                    <td>закрыт</td>
+                                </tr>
+                                {stages.map((stage, index) => <tr key={stage.adoption_date.time + stage.closing_date.time}>
+                                    <td>{index+1}</td>
+                                    <td>{stage.curator}</td>
+                                    <td><textarea defaultValue={stage.report}></textarea></td>
+                                    <td>{stage.adoption_date.date} <br /> в {stage.adoption_date.time}</td>
+                                    <td>{stage.closing_date.date}  <br /> в {stage.closing_date.time}</td>
+                                </tr>)}
+                            </tbody>
+                        </table>
                         <table className={styles.componentInfo2}>
                             <tbody>
                                 <tr>
@@ -177,6 +210,7 @@ const OrderInfo = (props) => {
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                         }
                         <table className={styles.componentInfo2}>
@@ -185,6 +219,29 @@ const OrderInfo = (props) => {
                                     <td><button onClick={() => deleteOrder()}>Удалить</button></td>
                                     <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
                                 </tr>
+                            </tbody>
+                        </table>
+                        <hr className={styles.itemHr} />
+                        <table className={styles.componentInfo} style={{ textAlign: 'center' }}>
+                            <tr >
+                                <td colSpan='4' >Журнал разработки</td>
+                            </tr>
+                            <tr >
+                                <td rowSpan='2'>Ответсвенный за этап</td>
+                                <td rowSpan='2'>Комментарий</td>
+                                <td colSpan='2' >Этап</td>
+                            </tr>
+                            <tr>
+                                <td>открыт</td>
+                                <td>закрыт</td>
+                            </tr>
+                            <tbody>
+                                {stages.map(stage => <tr>
+                                    <td>{stage.curator}</td>
+                                    <td><textarea value={stage.report}></textarea></td>
+                                    <td>{stage.adoption_date.date} <br /> в {stage.adoption_date.time}</td>
+                                    <td>{stage.closing_date.date}  <br /> в {stage.closing_date.time}</td>
+                                </tr>)}
                             </tbody>
                         </table>
                         <hr className={styles.itemHr} />

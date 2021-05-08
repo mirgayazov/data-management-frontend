@@ -73,7 +73,7 @@ export const CreateStage = (props) => {
   return (
     <Formik
       initialValues={{ comment: '' }}
-      onSubmit={(fields, { setSubmitting }) => {
+      onSubmit={(fields, { setSubmitting, setFieldValue  }) => {
         let today = new Date();
         let options = {
           year: 'numeric',
@@ -95,6 +95,7 @@ export const CreateStage = (props) => {
         }
         props.onSubmit(schema)
         setSubmitting(false);
+        setFieldValue('comment', '')
       }}
     >
       {({ isSubmitting }) => (

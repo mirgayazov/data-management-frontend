@@ -68,14 +68,14 @@ function App(props) {
           <Navbar position={props.position} email={props.email} />
           <div className='app-wrapper-content'>
             <Route exact path='/testers' render={() => <TestersContainer />} />
-            <Route exact path='/tester/:cryptedEmail/orders' render={() => <Projects position={props.position} email={props.email} name={props.name}/>} />
+            <Route exact path='/tester/:cryptedEmail/orders' render={() => <Projects position={props.position} email={props.email} name={props.name} />} />
             <Route exact path='/testers/:pn' render={() => <TesterInfoContainer />} />
 
             <Route exact path='/developers' render={() => <DevelopersContainer />} />
-            <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer/>} />
+            <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer />} />
 
             <Route exact path='/orders' render={() => <OrdersContainer />} />
-            <Route exact path='/orders/:id' render={() => <OrderInfoContainer  userPosition={props.position} />} />
+            <Route exact path='/orders/:id' render={() => <OrderInfoContainer userPosition={props.position} />} />
 
             <Route exact path='/customers' render={() => <CustomersContainer />} />
             <Route exact path='/customers/:id' render={() => <CustomerInfoContainer />} />

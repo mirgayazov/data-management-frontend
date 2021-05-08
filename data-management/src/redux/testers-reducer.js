@@ -62,7 +62,7 @@ export const getTesters = () => (dispatch) => {
 export const getTesterProjects = (email) => (dispatch) => {
     alert(2123)
     testersAPI.getTesterProjects(email)
-        .then(projects => { 
+        .then(projects => {
             console.log('+')
             // dispatch(setTesters(testers));
         })
@@ -75,9 +75,12 @@ export const createNewTester = (tester) => (dispatch) => {
         })
 }
 
-export const saveStage = (schema) => (dispatch) => {
+export const saveStage = (schema, callback) => (dispatch) => {
     testersAPI.saveStage(schema)
         .then(response => {
+            if (response.status === 200) {
+                callback(schema.order_id)
+            }
             // dispatch(getTesters())
         })
 }

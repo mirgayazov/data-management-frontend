@@ -21,6 +21,7 @@ export const ordersAPI = {
     removeTesterFromOrder(schema) { return server.post('orders/remove-tester-from-order', { schema }) },
     updateOrder(order) { return server.put('orders', { order }) },
     deleteOrder(id) { return server.delete('orders', { data: { id } }) },
+    getStages(orderId) { return server.post('order/stages', { data: { orderId } }) },
 }
 
 export const developersAPI = {
