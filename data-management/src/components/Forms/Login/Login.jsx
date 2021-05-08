@@ -46,8 +46,8 @@ export const LoginForm = (props) => {
         initialValues={{ email: '' }}
         onSubmit={(data, { setSubmitting }) => {
           props.onResetPassword(data.email)
-          setShowMsg(!setShowMsg)
-          // setSubmitting(false);
+          setShowMsg(!showMsg)
+          setSubmitting(false);
         }}
       >
         {({ isSubmitting }) => (
@@ -66,9 +66,9 @@ export const LoginForm = (props) => {
                   </div>
                   <button type='submit' className={styles.signinButton}>Далее</button>
                 </div> :
-                <p>
+                <h2>
                   Мы отправили письмо с инструкциями на вашу почту, пожалуйста, проверьте папку спам.
-                </p>}
+                </h2>}
             </div>
           </Form>
         )}

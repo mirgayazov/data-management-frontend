@@ -4,10 +4,16 @@ const SET_USER_DATA = "SET_USER_DATA"
 
 let initialState = {
     userId: null,
-    email: null,
-    isAuth: false,
+    // email: null,
+    email: 'mirgayazow2014@yandex.ru',
+    isAuth: true,
     count: 0,
-    name: null,
+    name: {
+        full_name: '123'
+    },
+    // name: null,
+    position: 'tester',
+    // position: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -22,10 +28,10 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, email, isAuth, count, name) => {
+export const setAuthUserData = (userId, email, isAuth, count, name, position) => {
     return {
         type: SET_USER_DATA,
-        payload: { userId, email, isAuth, count, name },
+        payload: { userId, email, isAuth, count, name, position },
     }
 }
 
@@ -33,9 +39,9 @@ export const login = (email, password) => (dispatch) => {
     authAPI.login(email, password)
         .then(response => {
             if (response.data.schema.resultCode === 0) {
-                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name))
+                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
             } else {
-                dispatch(setAuthUserData(null, null, false, 1, null))
+                dispatch(setAuthUserData(null, null, false, 1, null, null))
             }
         })
 }
@@ -43,16 +49,16 @@ export const login = (email, password) => (dispatch) => {
 export const resetPassword = (email) => (dispatch) => {
     authAPI.resetPassword(email)
         .then(response => {
-            // if (response.data.schema.resultCode === 0) {
-            //     dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name))
-            // } else {
-            //     dispatch(setAuthUserData(null, null, false, 1, null))
-            // }
+            if (response.data.schema.resultCode === 0) {
+                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position ))
+            } else {
+                dispatch(setAuthUserData(null, null, false, 1, null, null))
+            }
         })
 }
 
 export const logout = () => (dispatch) => {
-    dispatch(setAuthUserData(null, null, false, 0, null))
+    dispatch(setAuthUserData(null, null, false, 0, null, null))
 }
 
 export default authReducer

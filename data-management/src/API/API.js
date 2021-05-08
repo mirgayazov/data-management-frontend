@@ -9,6 +9,7 @@ export const testersAPI = {
     createNewTester(tester) { return server.post('testers', { tester }) },
     updateTester(tester) { return server.put('testers', { tester }) },
     deleteTester(pn) { return server.delete('testers', { data: { pn } }) },
+    saveStage(schema) { return server.post('stages', { data: { schema } }) },
 }
 
 export const ordersAPI = {
@@ -39,4 +40,8 @@ export const customersAPI = {
 export const authAPI = {
     login(email, password) { return server.post('auth/login', { data: { email, password } }) },
     resetPassword(email) { return server.post('auth/reset-password', { data: { email } }) }
+}
+
+export const commonAPI = {
+    getProjects(position, email) { return server.post(`${position}/projects`, { data: { email } }) },
 }

@@ -8,7 +8,7 @@ import { withRouter } from 'react-router';
 class OrderInfoContainer extends React.Component {
     render() {
         return (
-            <OrderInfo testers={this.props.testers} developers={this.props.developers} order={this.props.orders.filter(order => order.id === this.props.match.params.id)[0]} />
+            <OrderInfo  userPosition={this.props.userPosition}  testers={this.props.testers} developers={this.props.developers} order={this.props.orders.filter(order => order.id === this.props.match.params.id)[0]} />
         )
     }
 }

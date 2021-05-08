@@ -69,6 +69,53 @@ export const CreateTesterForm = (props) => {
   )
 }
 
+export const CreateStage = (props) => {
+  return (
+    <Formik
+      initialValues={{ comment: '' }}
+      onSubmit={(fields, { setSubmitting }) => {
+        let today = new Date();
+        let options = {
+          year: 'numeric',
+          month: 'numeric',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        };
+        let dateAndtime = today.toLocaleString("ru", options).replace(/ /g, '').split(',')
+        let schema = {
+          report: fields.comment,
+          order_id: Number(props.orderId),
+          closing_date: {
+            date: dateAndtime[0],
+            time: dateAndtime[1],
+          },
+          curator: window.store.getState().auth.name.full_name,
+        }
+        props.onSubmit(schema)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>Замечания</td><td><Field className={styles.item} type='text' name='comment' as='textarea' />
+                  <ErrorMessage name='comment' component='div' /></td>
+                <td> <button type='submit' disabled={isSubmitting}>
+                  Добавить
+                </button></td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
 export const UpdateTesterForm = (props) => {
   return (
     <Formik
