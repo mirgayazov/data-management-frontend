@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const Navbar = (props) => {
 
   const crypt = (email) => btoa(email)
-  // const decrypt = (cryptedEmail) => atob(cryptedEmail)
+
   const cryptedEmail = crypt(props.email)
 
   return (
@@ -13,10 +13,10 @@ const Navbar = (props) => {
         <div>
           <nav className={s.nav}>
             <div className={s.item}>
-              <NavLink to='/tester/cryptedEmail/orders' activeClassName={s.activeLink}></NavLink>
+              <NavLink to={'/staff'} activeClassName={s.activeLink}>Персонал</NavLink>
             </div>
             <div className={s.item}>
-              <NavLink to='/admin/id/account' activeClassName={s.activeLink}>Аккаунт</NavLink>
+              <NavLink to={`/admin/:${cryptedEmail}/account`} activeClassName={s.activeLink}>Аккаунт</NavLink>
             </div>
           </nav>
         </div> : null}
@@ -61,7 +61,7 @@ const Navbar = (props) => {
               <NavLink to='/orders' activeClassName={s.activeLink}>Заказы</NavLink>
             </div>
             <div className={s.item}>
-              <NavLink to='/manager/id/account' activeClassName={s.activeLink}>Аккаунт</NavLink>
+              <NavLink to={`/manager/:${cryptedEmail}/account`} activeClassName={s.activeLink}>Аккаунт</NavLink>
             </div>
           </nav></div> : null}
 

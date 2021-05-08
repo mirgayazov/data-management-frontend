@@ -39,10 +39,12 @@ export const login = (email, password) => (dispatch) => {
     authAPI.login(email, password)
         .then(response => {
             if (response.data.schema.resultCode === 0) {
-                if (response.data.schema.position !== 'manager') {
-                    dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
-                } else {
+                if (response.data.schema.position === 'manager') {
                     dispatch(setAuthUserData(response.data.schema.id, email, true, 0, 'manager', 'manager'))
+                } if (response.data.schema.position === 'admin') {
+                    dispatch(setAuthUserData(response.data.schema.id, email, true, 0, 'admin', 'admin'))
+                } else {
+                    dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
                 }
             } else {
                 dispatch(setAuthUserData(null, null, false, 1, null, null))

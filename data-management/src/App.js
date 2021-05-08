@@ -16,8 +16,32 @@ import { getOrders } from './redux/orders-reducer'
 import React, { useState } from 'react';
 //--
 import { authAPI, commonAPI } from './api/api'
-import { ChangePassword } from './components/Forms/Login/Login';
+import { ChangePassword, CreateAdminForm, CreateManagerForm } from './components/Forms/Login/Login';
 import { logout } from './redux/auth-reducer';
+
+let Staff = () => {
+
+  let [createAdmin, setCreateAdmin] = useState(false)
+  let [createManager, setCreateManager] = useState(false)
+
+  let onSubmit = (schema) => {
+    console.log(schema)
+    authAPI.createStaff(schema)
+      .then(result => {
+        setCreateManager(false)
+        setCreateAdmin(false)
+      })
+  }
+
+  return (
+    <div>
+      <button className='item ' onClick={() => setCreateAdmin(!createAdmin)} >{createAdmin ? 'Отмена' : 'Создать администратора'}</button>
+      {createAdmin ? <CreateAdminForm onSubmit={onSubmit}/> : <div></div>}
+      <button className='item ' onClick={() => setCreateManager(!createManager)} >{createManager ? 'Отмена' : 'Создать менеджера'}</button>
+      {createManager ? <CreateManagerForm onSubmit={onSubmit}/> : <div></div>}
+    </div>
+  );
+};
 
 let Account = () => {
 
@@ -36,12 +60,11 @@ let Account = () => {
           window.location.href = 'http://localhost:3001/'
         }
       })
-    // console.log(schema)
   }
 
   return (
     <div>
-      <button className='item ' onClick={() => {setChangePassword(!changePassword); setMsg('Чтобы создать надежный пароль используйте специальные символы: $%^&...')}}>{changePassword ? 'Отмена' : 'Сменить пароль'}</button>
+      <button className='item ' onClick={() => { setChangePassword(!changePassword); setMsg('Чтобы создать надежный пароль используйте специальные символы: $%^&...') }}>{changePassword ? 'Отмена' : 'Сменить пароль'}</button>
       {changePassword ? <ChangePassword onSubmit={onSubmit} msg={msg} /> : <div></div>}
     </div>
   );
@@ -78,10 +101,6 @@ class Projects extends React.Component {
             </NavLink>
           )
         })}
-        {/* <button onClick={() => testersAPI.getTesterProjects(this.props.email)}>+12312</button>
-        <button onClick={() => console.log(this.props)}>123+</button>
-        Мои проекты, я являюсь {this.props.position}
-        моя почта - {this.props.email} */}
       </div>
     );
   }
@@ -110,6 +129,11 @@ function App(props) {
 
             <Route exact path='/customers' render={() => <CustomersContainer />} />
             <Route exact path='/customers/:id' render={() => <CustomerInfoContainer />} />
+
+            <Route exact path='/staff' render={() => <Staff />} />
+            <Route exact path='/admin/:cryptedEmail/account' render={() => <Account position={props.position} email={props.email} name={props.name} />} />
+
+            <Route exact path='/manager/:cryptedEmail/account' render={() => <Account position={props.position} email={props.email} name={props.name} />} />
           </div>
         </> :
         <>

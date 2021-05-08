@@ -122,3 +122,73 @@ export const ChangePassword = (props) => {
     </Formik>
   )
 }
+
+export const CreateManagerForm = (props) => {
+  return (
+    <Formik
+      initialValues={{ email: '' }}
+      onSubmit={(fields, { setSubmitting, setFieldValue }) => {
+        fields.position = 'manager'
+        props.onSubmit(fields)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>
+                  <Field className={styles.item} type='text' name='email' placeholder='Электронная почта сотрудника' />
+                  <ErrorMessage name='email' component='div' />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type='submit' disabled={isSubmitting}>
+                    Создать
+                 </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
+export const CreateAdminForm = (props) => {
+  return (
+    <Formik
+      initialValues={{ email: '' }}
+      onSubmit={(fields, { setSubmitting, setFieldValue }) => {
+        fields.position = 'admin'
+        props.onSubmit(fields)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>
+                  <Field className={styles.item} type='text' name='email' placeholder='Электронная почта сотрудника' />
+                  <ErrorMessage name='email' component='div' />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type='submit' disabled={isSubmitting}>
+                    Создать
+                 </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}

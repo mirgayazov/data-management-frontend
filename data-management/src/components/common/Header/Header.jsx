@@ -10,7 +10,7 @@ const Header = (props) => {
 
   return (
     <header className={classes.header}>
-      Здравствуйте {props.name.full_name}!
+      Добро пожаловать {props.name.full_name}!
       <NavLink onClick={logout} to='/' className={classes.link} >Выйти из системы</NavLink>
     </header>
   );

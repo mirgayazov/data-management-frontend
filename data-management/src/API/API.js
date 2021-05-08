@@ -42,6 +42,7 @@ export const authAPI = {
     login(email, password) { return server.post('auth/login', { data: { email, password } }) },
     resetPassword(email) { return server.post('auth/reset-password', { data: { email } }) },
     changePassword(schema) { return server.post(`auth/change-password`, { data: { schema } }) },
+    createStaff(schema) { return server.post(`auth/create-staff`, { data: { schema } }) },
 }
 
 export const commonAPI = {
