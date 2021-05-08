@@ -75,3 +75,50 @@ export const LoginForm = (props) => {
       </Formik>
   )
 }
+
+
+export const ChangePassword = (props) => {
+  return (
+    <Formik
+      initialValues={{ newPassword1: '', newPassword2: '' }}
+      onSubmit={(fields, { setSubmitting, setFieldValue }) => {
+        fields.email = window.store.getState().auth.email;
+        props.onSubmit(fields)
+        setSubmitting(false);
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>
+                  {props.msg}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Field className={styles.item} type='password' name='newPassword1' placeholder='Новый пароль' />
+                  <ErrorMessage name='newPassword1' component='div' />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <Field className={styles.item} type='password' name='newPassword2' placeholder='Повторите пароль' />
+                  <ErrorMessage name='newPassword2' component='div' />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <button type='submit' disabled={isSubmitting}>
+                    Сменить
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}

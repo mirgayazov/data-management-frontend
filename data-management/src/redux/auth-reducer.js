@@ -4,16 +4,16 @@ const SET_USER_DATA = "SET_USER_DATA"
 
 let initialState = {
     userId: null,
-    // email: null,
-    email: 'mirgayazow2014@yandex.ru',
-    isAuth: true,
+    email: null,
+    // email: 'mirgayazow2014@yandex.ru',
+    isAuth: false,
     count: 0,
-    name: {
-        full_name: '123'
-    },
-    // name: null,
-    position: 'tester',
-    // position: null,
+    // name: {
+    // full_name: '123'/
+    // },
+    name: null,
+    // position: 'tester',
+    position: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -39,7 +39,11 @@ export const login = (email, password) => (dispatch) => {
     authAPI.login(email, password)
         .then(response => {
             if (response.data.schema.resultCode === 0) {
-                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
+                if (response.data.schema.position !== 'manager') {
+                    dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
+                } else {
+                    dispatch(setAuthUserData(response.data.schema.id, email, true, 0, 'manager', 'manager'))
+                }
             } else {
                 dispatch(setAuthUserData(null, null, false, 1, null, null))
             }
@@ -50,7 +54,7 @@ export const resetPassword = (email) => (dispatch) => {
     authAPI.resetPassword(email)
         .then(response => {
             if (response.data.schema.resultCode === 0) {
-                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position ))
+                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
             } else {
                 dispatch(setAuthUserData(null, null, false, 1, null, null))
             }

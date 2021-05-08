@@ -13,9 +13,39 @@ import OrderInfoContainer from './components/Orders/OrderInfo/OrderInfoContainer
 import Login from './components/Login/Login';
 import { connect } from 'react-redux';
 import { getOrders } from './redux/orders-reducer'
-import React from 'react';
+import React, { useState } from 'react';
 //--
-import { commonAPI } from './api/api'
+import { authAPI, commonAPI } from './api/api'
+import { ChangePassword } from './components/Forms/Login/Login';
+import { logout } from './redux/auth-reducer';
+
+let Account = () => {
+
+  let [changePassword, setChangePassword] = useState(false)
+  let [msg, setMsg] = useState('Чтобы создать надежный пароль используйте специальные символы: $%^&...')
+
+  let onSubmit = (schema) => {
+    authAPI.changePassword(schema)
+      .then(result => {
+        if (result.data.resultCode === -2) {
+          setMsg(result.data.msg)
+          console.log(result.data)
+        }
+        if (result.data.resultCode === 0) {
+          logout();
+          window.location.href = 'http://localhost:3001/'
+        }
+      })
+    // console.log(schema)
+  }
+
+  return (
+    <div>
+      <button className='item ' onClick={() => {setChangePassword(!changePassword); setMsg('Чтобы создать надежный пароль используйте специальные символы: $%^&...')}}>{changePassword ? 'Отмена' : 'Сменить пароль'}</button>
+      {changePassword ? <ChangePassword onSubmit={onSubmit} msg={msg} /> : <div></div>}
+    </div>
+  );
+};
 
 class Projects extends React.Component {
 
@@ -69,6 +99,7 @@ function App(props) {
           <div className='app-wrapper-content'>
             <Route exact path='/testers' render={() => <TestersContainer />} />
             <Route exact path='/tester/:cryptedEmail/orders' render={() => <Projects position={props.position} email={props.email} name={props.name} />} />
+            <Route exact path='/tester/:cryptedEmail/account' render={() => <Account position={props.position} email={props.email} name={props.name} />} />
             <Route exact path='/testers/:pn' render={() => <TesterInfoContainer />} />
 
             <Route exact path='/developers' render={() => <DevelopersContainer />} />

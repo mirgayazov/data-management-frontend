@@ -127,3 +127,80 @@ link a {
   color: #aaa;
   font-size: 15px;
 }
+
+.item {
+  width: 300px;
+  display: inline-block;
+  outline: none;
+  border-radius: 10px;
+  border: 0;
+  background: #ecf0f3;
+}
+
+table {
+  margin: 40px;
+}
+
+button {
+  outline: none;
+  border: 0;
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.component .item {
+  display: inline-block;
+  margin: 15px;
+  border-radius: 20px;
+  border-radius: 40px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
+  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+}
+
+.componentInfo3 td{
+  padding: 10px;
+  margin: 55px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
+}
+
+.component {
+  margin: 15px;
+  border-radius: 20px;
+  border-radius: 40px;
+  margin-bottom: 25px;
+  border-radius: 20px;
+  padding: 15px 15px 15px 15px;
+}
+
+.link {
+  text-decoration: none;
+  border-radius: 20px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
+  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+  color: black;
+}
+
+.componentInfo td{
+  width: 200px;
+  padding: 10px;
+  margin-bottom: 25px;
+  border-radius: 1px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
+  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+}
+
+.componentInfo2 td{
+  padding: 10px;
+  margin-bottom: 25px;
+  border-radius: 10px;
+  padding: 15px 15px 15px 15px;
+  background: #ecf0f3; 
+  box-shadow: 13px 13px 20px #cbced1, -1px -1px 2px #cfcccc;
+}
