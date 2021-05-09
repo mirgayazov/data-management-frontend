@@ -12,8 +12,8 @@ import { ordersAPI } from '../../../api/api';
 const OrderInfo = (props) => {
     const history = useHistory();
 
-    let [sortedDevs, setSortedDevs] = useState(props.developers.filter(d => d.projectsCount <= 3))
-    let [sortedTesters, setSortedTesters] = useState(props.testers.filter(t => t.projectsCount <= 3))
+    let [sortedDevs, setSortedDevs] = useState(props.developers)
+    let [sortedTesters, setSortedTesters] = useState(props.testers)
 
     const array = []
     for (let i = 0; i < sortedDevs.length; i++) {
@@ -90,12 +90,10 @@ const OrderInfo = (props) => {
 
         if (props.order.developers.filter(d => d.position === 'cпециалист отдела разработки').length === 0) {
             let devsIds = sortedDevs.filter(d => d.position === 'cпециалист отдела разработки').map(d => d.personnel_number)
-            console.log(devsIds)
             let isTouched = false
             for (const selDev of selectedDevs) {
                 if (devsIds.includes(selDev)) {
                     isTouched = true
-                    console.log('yes')
                     props.appointDeveloper(schema, setSortedDevs)
                     onClose()
                     break
@@ -125,8 +123,26 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             designatedTesters: selectedTesters
         }
-        props.appointTester(schema)
-        onCloseTesters()
+        
+        if (props.order.testers.filter(t => t.position === 'cпециалист отдела тестирования').length === 0) {
+            let tesIds = sortedTesters.filter(t => t.position === 'cпециалист отдела тестирования').map(d => d.personnel_number)
+            let isTouched = false
+            for (const selTes of selectedTesters) {
+                if (tesIds.includes(selTes)) {
+                    isTouched = true
+                    console.log('yes')
+                    props.appointTester(schema, setSortedTesters)
+                    onCloseTesters()
+                    break
+                }
+            }
+            if (isTouched === false) {
+                alert('Выберите хотя бы одного cпециалиста отдела тестирования')
+            }
+        } else {
+            props.appointTester(schema, setSortedTesters)
+            onCloseTesters()
+        }
     }
 
     const removeTesterFromOrder = (testerId) => {
@@ -134,7 +150,7 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             testerId
         }
-        props.removeTesterFromOrder(schema)
+        props.removeTesterFromOrder(schema, setSortedDevs)
         setModalTesters(false)
     }
     return (
@@ -259,7 +275,7 @@ const OrderInfo = (props) => {
                                 <td>закрыт</td>
                             </tr>
                             <tbody>
-                                {stages.map(stage => <tr>
+                                {stages.map(stage => <tr key={stage.adoption_date.time + stage.closing_date.time + '2'}>
                                     <td>{stage.curator}</td>
                                     <td><textarea value={stage.report}></textarea></td>
                                     <td>{stage.adoption_date.date} <br /> в {stage.adoption_date.time}</td>
@@ -322,15 +338,19 @@ const OrderInfo = (props) => {
                             visible={isModal}
                             title="Выберите разработчиков, назначаемых на заказ"
                             content={
-                                <table>
+                                <table >
                                     <tbody>
                                         {sortedDevs.map((d, index) => {
                                             return (
                                                 <tr>
                                                     <td>{index + 1})</td>
-                                                    <td>
-                                                        <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name} [{d.position}] [{d.projectsCount}]</p>
-                                                    </td>
+                                                    {d.projectsCount <= 2 ? <td>
+                                                        <p style={{ border: '1px solid gray', backgroundColor: selectedColor[index].value, cursor: "cell", borderRadius: "10px", padding: "10px" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name} – {d.position}</p>
+                                                    </td> :
+                                                        <td>
+                                                            <p disabled title='Данный специалист уже занят' style={{ backgroundColor: "#f2b852", borderRadius: "10px", padding: "10px", cursor: "help" }} key={'d' + d.personnel_number}  >{d.full_name} – {d.position}</p>
+                                                        </td>}
+
                                                 </tr>
                                             )
                                         })}
@@ -357,9 +377,19 @@ const OrderInfo = (props) => {
                                             return (
                                                 <tr>
                                                     <td>{index + 1})</td>
-                                                    <td><p style={{ backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = '#6FE66F'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}</p></td>
+                                                    {t.projectsCount <= 2 ?
+                                                        <td>
+                                                            <p style={{border: '1px solid gray', borderRadius: "10px", padding: "10px", backgroundColor: selectedColorTesters[index].value, cursor: "cell" }} key={'d' + t.personnel_number} onClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = '#6FE66F'; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters([...selectedTesters, t.personnel_number]) }} onDoubleClick={() => { let c = selectedColorTesters.findIndex(sc => sc.id === t.personnel_number); selectedColorTesters[c].value = ''; setSelectedColorTesters([...selectedColorTesters]); setSelectedTesters(selectedTesters.filter(seld => seld !== t.personnel_number)) }} >{t.full_name}  – {t.position}
+                                                            </p>
+                                                        </td>
+                                                        :
+                                                        <td>
+                                                            <p disabled title='Данный специалист уже занят' style={{ backgroundColor: "#f2b852", borderRadius: "10px", padding: "10px", cursor: "help" }} >{t.full_name} – {t.position}
+                                                            </p>
+                                                        </td>
+                                                    }
                                                 </tr>
-                                            )
+                                            ) 
                                         })}
                                     </tbody>
                                 </table>

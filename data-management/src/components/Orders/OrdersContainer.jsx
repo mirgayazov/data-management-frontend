@@ -23,6 +23,7 @@ const mapStateToProps = (state) => {
         orders: state.ordersPage.orders,
         isFetching: state.ordersPage.isFetching,
         developers: state.developersPage.developers,
+        testers: state.testersPage.testers,
     }
 }
 

@@ -23,7 +23,7 @@ let Paginator = (props) => {
     return (
         <div>
             <button style={{ marginLeft: "10px" }} onClick={previous}>◀</button>
-            <input type="text" value={currentPage} />
+            <input type="text" value={currentPage} readOnly/>
             <button onClick={next}>▶</button>
         </div >
     )

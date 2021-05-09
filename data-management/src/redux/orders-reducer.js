@@ -1,6 +1,7 @@
-import { developersAPI, ordersAPI } from '../api/api'
+import { developersAPI, ordersAPI, testersAPI } from '../api/api'
 import { getCustomers } from './customers-reducer'
 import { setDevelopers } from './developers-reducer'
+import { setTesters } from './testers-reducer'
 
 const SET_ORDERS = 'SET_ORDERS'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
@@ -79,16 +80,21 @@ export const appointDeveloper = (schema, setSortedDevs) => (dispatch) => {
             dispatch(getOrders())
             developersAPI.getDevelopers()
                 .then(data => {
-                    setSortedDevs(data.reverse().filter(d => d.projectsCount <= 3))
+                    setSortedDevs(data.reverse())
                     dispatch(setDevelopers(data))
                 })
         })
 }
 
-export const appointTester = (schema) => (dispatch) => {
+export const appointTester = (schema, setSortedTesters) => (dispatch) => {
     ordersAPI.appointTester(schema)
         .then(response => {
             dispatch(getOrders())
+            testersAPI.getTesters()
+                .then(data => {
+                    setSortedTesters(data.reverse())
+                    dispatch(setTesters(data))
+                })
         })
 }
 
@@ -98,16 +104,21 @@ export const removeDeveloperFromOrder = (schema, setSortedDevs) => (dispatch) =>
             dispatch(getOrders())
             developersAPI.getDevelopers()
                 .then(data => {
-                    setSortedDevs(data.reverse().filter(d => d.projectsCount <= 3))
+                    setSortedDevs(data.reverse())
                     dispatch(setDevelopers(data))
                 })
         })
 }
 
-export const removeTesterFromOrder = (schema) => (dispatch) => {
+export const removeTesterFromOrder = (schema, setSortedTesters) => (dispatch) => {
     ordersAPI.removeTesterFromOrder(schema)
         .then(response => {
             dispatch(getOrders())
+            testersAPI.getTesters()
+                .then(data => {
+                    setSortedTesters(data.reverse())
+                    dispatch(setTesters(data))
+                })
         })
 }
 
