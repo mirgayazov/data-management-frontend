@@ -1,17 +1,55 @@
 import styles from './Developers.module.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { levenshtein } from '../../utils/levenshtein'
+
+let Paginator = (props) => {
+    let [currentPage, setCurrentPage] = useState(1)
+
+    let next = () => {
+        if (currentPage <= props.pageCount - 1) {
+            setCurrentPage(++currentPage)
+            props.onNext(currentPage)
+        }
+    }
+
+    let previous = () => {
+        if (currentPage >= 2) {
+            setCurrentPage(--currentPage)
+            props.onPrevious(currentPage)
+        }
+    }
+
+    return (
+        <div>
+            <button style={{ marginLeft: "10px" }} onClick={previous}>назад</button>
+            <input type="text" value={currentPage} />
+            <button onClick={next}>вперед</button>
+        </div >
+    )
+}
 
 class Developers extends React.Component {
     constructor(props) {
         super(props);
         this.searchInput = React.createRef();
+        this.state.currentMaxPage = 10;
     }
 
     state = {
-        developers: this.props.developers,
+        pageSize: 10,
+        currentMaxPage: 10,
+        developers: this.props.developers.slice(0, 10),
         rollbackDevelopers: this.props.developers,
+        pageCount: Math.ceil(this.props.developers.length / 10),
+    }
+
+    Previous(newPage) {
+        this.setState({ developers: this.state.rollbackDevelopers.slice(this.state.currentMaxPage - this.state.pageSize*2, this.state.currentMaxPage - this.state.pageSize), currentMaxPage: this.state.currentMaxPage - this.state.pageSize })
+    }
+
+    Next(newPage) {
+        this.setState({ developers: this.state.rollbackDevelopers.slice(this.state.currentMaxPage, this.state.currentMaxPage + this.state.pageSize), currentMaxPage: this.state.currentMaxPage + this.state.pageSize })
     }
 
     findDeveloper() {
@@ -33,7 +71,7 @@ class Developers extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.developers !== this.props.developers) {
-            this.setState({ developers: this.props.developers })
+            this.setState({ developers: this.props.developers.slice(0, this.state.pageSize) })
         }
     }
 
@@ -45,6 +83,11 @@ class Developers extends React.Component {
                     <button onClick={() => this.findDeveloper()}>поиск</button>
                     <button onClick={() => this.rollback()}>сброс</button>
                 </div>
+                {this.state.currentMaxPage}
+                <div className={styles.tools2}>
+                    <Paginator pageCount={this.state.pageCount} onNext={this.Next.bind(this)} onPrevious={this.Previous.bind(this)} />
+                </div>
+
                 {this.state.developers.map(d => {
                     return (
                         <NavLink key={d.personnel_number} className={styles.link} to={`/developers/${d.personnel_number}`}>

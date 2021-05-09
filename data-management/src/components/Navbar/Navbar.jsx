@@ -33,6 +33,18 @@ const Navbar = (props) => {
           </nav>
         </div> : null}
 
+      {props.position === 'customer' ?
+        <div>
+          <nav className={s.nav}>
+            <div className={s.item}>
+              <NavLink to={`/customer/:${cryptedEmail}/orders`} activeClassName={s.activeLink}>Мои заказы</NavLink>
+            </div>
+            <div className={s.item}>
+              <NavLink to={`/customer/:${cryptedEmail}/account`} activeClassName={s.activeLink}>Аккаунт</NavLink>
+            </div>
+          </nav>
+        </div> : null}
+
       {props.position === 'developer' ?
         <div>
           <nav className={s.nav}>
