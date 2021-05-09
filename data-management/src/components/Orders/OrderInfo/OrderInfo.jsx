@@ -10,6 +10,7 @@ import { CreateStage } from '../../Forms/Testers/Testers';
 import { ordersAPI } from '../../../api/api';
 
 const OrderInfo = (props) => {
+    debugger
     const history = useHistory();
 
     let [sortedDevs, setSortedDevs] = useState(props.developers)

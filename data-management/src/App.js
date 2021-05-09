@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import { getOrders } from './redux/orders-reducer'
 import React, { useState } from 'react';
 //--
-import { authAPI, commonAPI } from './api/api'
+import { authAPI, commonAPI,  } from './api/api'
 import { ChangePassword, CreateAdminForm, CreateManagerForm } from './components/Forms/Login/Login';
 import { logout } from './redux/auth-reducer';
 
@@ -77,9 +77,11 @@ class Projects extends React.Component {
   }
 
   componentDidMount() {
+    
     commonAPI.getProjects(this.props.position, this.props.email)
       .then(data => {
         this.setState({ orders: data.data.orders });
+        getOrders()
       })
   }
 
