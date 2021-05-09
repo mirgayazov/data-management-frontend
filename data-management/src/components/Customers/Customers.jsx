@@ -95,7 +95,7 @@ class Customers extends React.Component {
 
                 <div className={styles.tools2}>
                     <Paginator pageCount={this.state.pageCount} onNext={this.Next.bind(this)} onPrevious={this.Previous.bind(this)} />
-                </div>
+                </div>              
             </div>
         )
     }

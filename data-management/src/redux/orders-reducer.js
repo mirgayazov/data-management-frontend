@@ -1,5 +1,6 @@
-import { ordersAPI } from '../api/api'
+import { developersAPI, ordersAPI } from '../api/api'
 import { getCustomers } from './customers-reducer'
+import { setDevelopers } from './developers-reducer'
 
 const SET_ORDERS = 'SET_ORDERS'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
@@ -72,10 +73,15 @@ export const deleteOrder = (pn) => (dispatch) => {
         })
 }
 
-export const appointDeveloper = (schema) => (dispatch) => {
+export const appointDeveloper = (schema, setSortedDevs) => (dispatch) => {
     ordersAPI.appointDeveloper(schema)
         .then(response => {
             dispatch(getOrders())
+            developersAPI.getDevelopers()
+                .then(data => {
+                    setSortedDevs(data.reverse().filter(d => d.projectsCount <= 3))
+                    dispatch(setDevelopers(data))
+                })
         })
 }
 
@@ -86,10 +92,15 @@ export const appointTester = (schema) => (dispatch) => {
         })
 }
 
-export const removeDeveloperFromOrder = (schema) => (dispatch) => {
+export const removeDeveloperFromOrder = (schema, setSortedDevs) => (dispatch) => {
     ordersAPI.removeDeveloperFromOrder(schema)
         .then(response => {
             dispatch(getOrders())
+            developersAPI.getDevelopers()
+                .then(data => {
+                    setSortedDevs(data.reverse().filter(d => d.projectsCount <= 3))
+                    dispatch(setDevelopers(data))
+                })
         })
 }
 

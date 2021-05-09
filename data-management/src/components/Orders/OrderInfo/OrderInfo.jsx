@@ -12,19 +12,22 @@ import { ordersAPI } from '../../../api/api';
 const OrderInfo = (props) => {
     const history = useHistory();
 
+    let [sortedDevs, setSortedDevs] = useState(props.developers.filter(d => d.projectsCount <= 3))
+    let [sortedTesters, setSortedTesters] = useState(props.testers.filter(t => t.projectsCount <= 3))
+
     const array = []
-    for (let i = 0; i < props.developers.length; i++) {
+    for (let i = 0; i < sortedDevs.length; i++) {
         let color = {
-            id: props.developers[i].personnel_number,
+            id: sortedDevs[i].personnel_number,
             value: ''
         }
         array.push(color)
     }
 
     const arrayTesters = []
-    for (let i = 0; i < props.testers.length; i++) {
+    for (let i = 0; i < sortedTesters.length; i++) {
         let color = {
-            id: props.testers[i].personnel_number,
+            id: sortedTesters[i].personnel_number,
             value: ''
         }
         arrayTesters.push(color)
@@ -70,10 +73,10 @@ const OrderInfo = (props) => {
         setSelectedColorTesters(arrayTesters)
     }
 
-    const deleteOrder = () => {
-        history.goBack()
-        props.deleteOrder(props.order.id)
-    }
+    // const deleteOrder = () => {
+    //     history.goBack()
+    //     props.deleteOrder(props.order.id)
+    // }
 
     const goBack = () => {
         history.goBack();
@@ -84,7 +87,7 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             designatedDevelopers: selectedDevs
         }
-        props.appointDeveloper(schema)
+        props.appointDeveloper(schema, setSortedDevs)
         onClose()
     }
 
@@ -93,7 +96,7 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             developerId
         }
-        props.removeDeveloperFromOrder(schema)
+        props.removeDeveloperFromOrder(schema, setSortedDevs)
         setModal(false)
     }
 
@@ -158,7 +161,7 @@ const OrderInfo = (props) => {
                                     <td>закрыт</td>
                                 </tr>
                                 {stages.map((stage, index) => <tr key={stage.adoption_date.time + stage.closing_date.time}>
-                                    <td>{index+1}</td>
+                                    <td>{index + 1}</td>
                                     <td>{stage.curator}</td>
                                     <td><textarea defaultValue={stage.report}></textarea></td>
                                     <td>{stage.adoption_date.date} <br /> в {stage.adoption_date.time}</td>
@@ -301,12 +304,12 @@ const OrderInfo = (props) => {
                             content={
                                 <table>
                                     <tbody>
-                                        {props.developers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((d, index) => {
+                                        {sortedDevs.map((d, index) => {
                                             return (
                                                 <tr>
                                                     <td>{index + 1})</td>
                                                     <td>
-                                                        <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name} [{d.position}]</p>
+                                                        <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name} [{d.position}] [{d.projectsCount}]</p>
                                                     </td>
                                                 </tr>
                                             )
@@ -330,7 +333,7 @@ const OrderInfo = (props) => {
                             content={
                                 <table>
                                     <tbody>
-                                        {props.testers.sort((a, b) => a.full_name.localeCompare(b.full_name)).map((t, index) => {
+                                        {sortedTesters.map((t, index) => {
                                             return (
                                                 <tr>
                                                     <td>{index + 1})</td>
