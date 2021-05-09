@@ -1,18 +1,57 @@
 import styles from './Testers.module.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { levenshtein } from '../../utils/levenshtein'
+
+let Paginator = (props) => {
+    let [currentPage, setCurrentPage] = useState(1)
+
+    let next = () => {
+        if (currentPage <= props.pageCount - 1) {
+            setCurrentPage(++currentPage)
+            props.onNext(currentPage)
+        }
+    }
+
+    let previous = () => {
+        if (currentPage >= 2) {
+            setCurrentPage(--currentPage)
+            props.onPrevious(currentPage)
+        }
+    }
+
+    return (
+        <div>
+            <button style={{ marginLeft: "10px" }} onClick={previous}>◀</button>
+            <input type="text" value={currentPage} />
+            <button onClick={next}>▶</button>
+        </div >
+    )
+}
 
 class Testers extends React.Component {
     constructor(props) {
         super(props);
         this.searchInput = React.createRef();
+        this.state.currentMaxPage = 10;
     }
 
     state = {
-        testers: this.props.testers,
+        pageSize: 10,
+        currentMaxPage: 10,
+        testers: this.props.testers.slice(0, 10),
         rollbackTesters: this.props.testers,
+        pageCount: Math.ceil(this.props.testers.length / 10),
     }
+
+    Previous(newPage) {
+        this.setState({ testers: this.state.rollbackTesters.slice(this.state.currentMaxPage - this.state.pageSize * 2, this.state.currentMaxPage - this.state.pageSize), currentMaxPage: this.state.currentMaxPage - this.state.pageSize })
+    }
+
+    Next(newPage) {
+        this.setState({ testers: this.state.rollbackTesters.slice(this.state.currentMaxPage, this.state.currentMaxPage + this.state.pageSize), currentMaxPage: this.state.currentMaxPage + this.state.pageSize })
+    }
+
 
     findTester() {
         const target = this.searchInput.current.value;
@@ -33,7 +72,7 @@ class Testers extends React.Component {
 
     componentDidUpdate(prevProps, prevState) {
         if (prevProps.testers !== this.props.testers) {
-            this.setState({ testers: this.props.testers })
+            this.setState({ testers: this.props.testers.slice(0, this.state.pageSize) })
         }
     }
 
@@ -54,7 +93,11 @@ class Testers extends React.Component {
                         </NavLink>
                     )
                 })}
+                 <div className={styles.tools2}>
+                    <Paginator pageCount={this.state.pageCount} onNext={this.Next.bind(this)} onPrevious={this.Previous.bind(this)} />
+                </div>
             </div >
+            
         )
     }
 }
