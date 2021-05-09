@@ -31,9 +31,11 @@ const Header = (props) => {
 
   return (
     <header className={classes.header}>
-      {department !== 'управления' ? props.name.full_name+'.' : null} Добро пожаловать в отдел {department}!
-      <NavLink onClick={logout} to='/' className={classes.link} >Выйти из системы </NavLink>
+      {department !== 'управления' ? props.name.full_name + '.' : null} Добро пожаловать в отдел {department}!
+
+      <NavLink onClick={logout} to='/' ><img style={{ width: "30px", height: "30px" }} src="https://img.icons8.com/carbon-copy/100/000000/export.png" alt='logout' /></NavLink>
     </header>
+
   );
 };
 

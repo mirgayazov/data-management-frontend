@@ -22,9 +22,9 @@ let Paginator = (props) => {
 
     return (
         <div>
-            <button style={{ marginLeft: "10px" }} onClick={previous}>назад</button>
+            <button style={{ marginLeft: "10px" }} onClick={previous}>◀</button>
             <input type="text" value={currentPage} />
-            <button onClick={next}>вперед</button>
+            <button onClick={next}>▶</button>
         </div >
     )
 }
@@ -45,7 +45,7 @@ class Developers extends React.Component {
     }
 
     Previous(newPage) {
-        this.setState({ developers: this.state.rollbackDevelopers.slice(this.state.currentMaxPage - this.state.pageSize*2, this.state.currentMaxPage - this.state.pageSize), currentMaxPage: this.state.currentMaxPage - this.state.pageSize })
+        this.setState({ developers: this.state.rollbackDevelopers.slice(this.state.currentMaxPage - this.state.pageSize * 2, this.state.currentMaxPage - this.state.pageSize), currentMaxPage: this.state.currentMaxPage - this.state.pageSize })
     }
 
     Next(newPage) {
@@ -83,10 +83,7 @@ class Developers extends React.Component {
                     <button onClick={() => this.findDeveloper()}>поиск</button>
                     <button onClick={() => this.rollback()}>сброс</button>
                 </div>
-                {this.state.currentMaxPage}
-                <div className={styles.tools2}>
-                    <Paginator pageCount={this.state.pageCount} onNext={this.Next.bind(this)} onPrevious={this.Previous.bind(this)} />
-                </div>
+
 
                 {this.state.developers.map(d => {
                     return (
@@ -97,6 +94,10 @@ class Developers extends React.Component {
                         </NavLink>
                     )
                 })}
+
+                <div className={styles.tools2}>
+                    <Paginator pageCount={this.state.pageCount} onNext={this.Next.bind(this)} onPrevious={this.Previous.bind(this)} />
+                </div>
             </div>
         )
     }
