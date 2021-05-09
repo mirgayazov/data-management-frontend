@@ -87,8 +87,28 @@ const OrderInfo = (props) => {
             orderId: props.order.id,
             designatedDevelopers: selectedDevs
         }
-        props.appointDeveloper(schema, setSortedDevs)
-        onClose()
+
+        if (props.order.developers.filter(d => d.position === 'cпециалист отдела разработки').length === 0) {
+            let devsIds = sortedDevs.filter(d => d.position === 'cпециалист отдела разработки').map(d => d.personnel_number)
+            console.log(devsIds)
+            let isTouched = false
+            for (const selDev of selectedDevs) {
+                if (devsIds.includes(selDev)) {
+                    isTouched = true
+                    console.log('yes')
+                    props.appointDeveloper(schema, setSortedDevs)
+                    onClose()
+                    break
+                }
+            }
+            if (isTouched === false) {
+                alert('Выберите хотя бы одного cпециалиста отдела разработки')
+
+            }
+        } else {
+            props.appointDeveloper(schema, setSortedDevs)
+            onClose()
+        }
     }
 
     const removeDeveloperFromOrder = (developerId) => {
