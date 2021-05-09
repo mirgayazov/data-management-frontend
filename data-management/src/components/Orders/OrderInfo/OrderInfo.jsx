@@ -216,7 +216,7 @@ const OrderInfo = (props) => {
                         <table className={styles.componentInfo2}>
                             <tbody>
                                 <tr>
-                                    <td><button onClick={() => deleteOrder()}>Удалить</button></td>
+                                    {/* <td><button onClick={() => deleteOrder()}>Удалить</button></td> */}
                                     <td><button onClick={() => setEditMode(!editMode)}>{editMode ? 'Отмена' : 'Редактировать'}</button></td>
                                 </tr>
                             </tbody>
@@ -306,7 +306,7 @@ const OrderInfo = (props) => {
                                                 <tr>
                                                     <td>{index + 1})</td>
                                                     <td>
-                                                        <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name}</p>
+                                                        <p style={{ backgroundColor: selectedColor[index].value, cursor: "cell" }} key={'d' + d.personnel_number} onClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = '#6FE66F'; setSelectedColor([...selectedColor]); setSelectedDevs([...selectedDevs, d.personnel_number]) }} onDoubleClick={() => { let c = selectedColor.findIndex(sc => sc.id === d.personnel_number); selectedColor[c].value = ''; setSelectedColor([...selectedColor]); setSelectedDevs(selectedDevs.filter(seld => seld !== d.personnel_number)) }} >{d.full_name} [{d.position}]</p>
                                                     </td>
                                                 </tr>
                                             )
