@@ -125,6 +125,8 @@ function App(props) {
 
             <Route exact path='/developers' render={() => <DevelopersContainer />} />
             <Route exact path='/developers/:pn' render={() => <DeveloperInfoContainer />} />
+            <Route exact path='/developer/:cryptedEmail/orders' render={() => <Projects position={props.position} email={props.email} name={props.name} />} />
+            <Route exact path='/developer/:cryptedEmail/account' render={() => <Account position={props.position} email={props.email} name={props.name} />} />
 
             <Route exact path='/orders' render={() => <OrdersContainer />} />
             <Route exact path='/orders/:id' render={() => <OrderInfoContainer userPosition={props.position} />} />
