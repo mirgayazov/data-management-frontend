@@ -127,3 +127,33 @@ export const UpdateCustomerForm = (props) => {
   )
 }
 
+export const ChangeCommentForm = (props) => {
+  return (
+    <Formik
+      initialValues={{ comment: '' }}
+      onSubmit={(fields, { setSubmitting, setFieldValue }) => {
+        props.onSubmit(fields)
+        setSubmitting(false);
+        setFieldValue('comment', '')
+      }}
+    >
+      {({ isSubmitting }) => (
+        <Form>
+          <table className={styles.componentInfo}>
+            <tbody>
+              <tr>
+                <td>Новый отзыв</td><td><Field className={styles.item} type='text' name='comment' as='textarea' />
+                  <ErrorMessage name='comment' component='div' /></td>
+                <td> <button type='submit' disabled={isSubmitting}>
+                  Сохранить
+                </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </Form>
+      )}
+    </Formik>
+  )
+}
+
