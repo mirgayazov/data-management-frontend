@@ -54,13 +54,13 @@ export const login = (email, password) => (dispatch) => {
 
 export const resetPassword = (email) => (dispatch) => {
     authAPI.resetPassword(email)
-        .then(response => {
-            if (response.data.schema.resultCode === 0) {
-                dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
-            } else {
-                dispatch(setAuthUserData(null, null, false, 1, null, null))
-            }
-        })
+        // .then(response => {
+        //     if (response.data.schema.resultCode === 0) {
+        //         dispatch(setAuthUserData(response.data.schema.id, email, true, 0, response.data.schema.name, response.data.schema.position))
+        //     } else {
+        //         dispatch(setAuthUserData(null, null, false, 1, null, null))
+        //     }
+        // })
 }
 
 export const logout = () => (dispatch) => {
